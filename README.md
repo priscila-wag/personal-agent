@@ -14,6 +14,7 @@ Works with **Claude Code Desktop**, **Claude Code CLI**, **Claude Co-Work**, **C
 - **Meeting prep built into /today** — 1:1s get full talking points (Discuss, Ask, Strategic, Close the loop); normal meetings get a 1-bullet action/perspective
 - **Content drafting** — `/draft [topic]` writes in your voice, not generic AI
 - **Document steelmanning** — `/steelman-advice [doc]` runs 3-5 parallel critique perspectives to surface blind spots and concrete improvements
+- **Meeting digests** — `/meeting-digest` fetches your latest Zoom transcript, extracts decisions and action items, deduplicates against Jira, and creates tickets after you review. Runs automatically every hour 9am–5pm via launchd.
 - **Persistent memory** — your agent remembers preferences, decisions, and lessons across sessions
 
 ## Quick Start
@@ -21,7 +22,7 @@ Works with **Claude Code Desktop**, **Claude Code CLI**, **Claude Co-Work**, **C
 ### 1. Download this folder
 
 ```
-git clone https://github.com/canvanauts/personal-agent.git
+git clone https://github.com/priscila-wag/personal-agent.git
 ```
 
 Or download the zip from the green **<Code>** button above.
@@ -104,8 +105,11 @@ Check out `Tasks/Week-2026-W01.md` — it's a pre-filled example showing how the
 - `/draft [topic]` — draft an email, Slack message, or document
 - `/steelman-advice [doc]` — multi-perspective critique of any document
 - `/slack-unactioned` — triage unread Slack into Tonight vs Tomorrow
+- `/meeting-digest` — fetch latest Zoom transcript → decisions, action items, Jira tickets
 - `/unblock [task]` — diagnose a stalled task
 - `/bias` — audit decisions against your motivational blind spots
+- `/achievements` — log and track accomplishments (feeds promo docs)
+- `/canva-lingo` — Canva-specific terminology and context reference
 
 ## Folder Structure
 
@@ -143,6 +147,10 @@ personal-agent/
     ├── bias/              # /bias — motivational bias audit
     ├── steelman-advice/   # /steelman-advice — multi-perspective document critique
     ├── slack-unactioned/  # /slack-unactioned — triage unread messages
+    ├── meeting-digest/    # /meeting-digest — Zoom → decisions + Jira tickets (also runs hourly via launchd)
+    ├── achievements/      # /achievements — log accomplishments
+    ├── canva-lingo/       # /canva-lingo — company terminology reference
+    ├── update-graph/      # /update-graph — update the idea graph with new Slack findings
     └── onboard/           # /onboard — first-time setup
 ```
 
@@ -186,6 +194,32 @@ If you're using Claude Co-Work, this workspace is complementary — not a replac
 | You repeat yourself every time | `GOALS.md` is read automatically |
 
 Co-Work provides the hands (connectors, sub-agents, Chrome, local files). This workspace provides the brain (goals, memory, learnings, skills that know you). You don't need to choose — they stack.
+
+## Automated Agents
+
+Some skills run on a schedule without you triggering them — fully autonomous loops that keep the system fresh.
+
+### Meeting Digest (hourly, 9am–5pm)
+
+`/meeting-digest` runs automatically every hour via macOS launchd. It checks for new Zoom meetings, skips ones already processed (idempotent), and when it finds something new: extracts decisions and action items, deduplicates against Jira, saves notes to `Context/Meeting Notes/`, and pushes to GitHub.
+
+**Setup files:**
+- `~/.claude/scripts/meeting-digest.sh` — shell wrapper with dynamic Claude binary detection
+- `~/Library/LaunchAgents/com.pri.meeting-digest.plist` — schedule (9, 10, 11 … 17:00)
+- `~/.claude/logs/meeting-digest.log` — run log
+
+**To load/unload:**
+```bash
+launchctl load ~/Library/LaunchAgents/com.pri.meeting-digest.plist
+launchctl unload ~/Library/LaunchAgents/com.pri.meeting-digest.plist
+```
+
+**To trigger manually for testing:**
+```bash
+launchctl start com.pri.meeting-digest
+```
+
+---
 
 ## Create Your Own Skills
 

@@ -19,8 +19,9 @@ Run all steps in sequence. Do not ask for confirmation between steps unless expl
 
 1. Call `mcp__zoom-notes__list_notes` with `limit: 10` and `from` set to 5 days ago (YYYY-MM-DD format).
 2. Identify the **most recent** note by date. If there are multiple meetings on the same day, pick the one that started latest.
-3. Call `mcp__zoom-notes__fetch_transcript` with the exact note name returned.
-4. If no transcript content is available (meeting too recent, recording not yet processed), tell the user: *"Transcript not ready yet — Zoom usually takes 5–10 min after the meeting ends. Run `/meeting-digest` again shortly."* Then stop.
+3. **Idempotency check** — before fetching the transcript, derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` (same format as Step 5). Check if a file with that name already exists in `Context/Meeting Notes/`. If it does, stop immediately and output: *"Notes already exist for [meeting name] ([date]) — skipping to avoid duplicates."* Do not fetch the transcript, do not create Jira tickets.
+4. Call `mcp__zoom-notes__fetch_transcript` with the exact note name returned.
+5. If no transcript content is available (meeting too recent, recording not yet processed), tell the user: *"Transcript not ready yet — Zoom usually takes 5–10 min after the meeting ends. Run `/meeting-digest` again shortly."* Then stop.
 
 ---
 

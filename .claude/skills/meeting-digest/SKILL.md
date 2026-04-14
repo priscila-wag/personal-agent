@@ -240,6 +240,30 @@ Replace `[Meeting Name]` and `[YYYY-MM-DD]` with the actual meeting title and da
 
 ---
 
+### Step 11 — Post summary to Slack
+
+After GitHub push (or failure), post a compact summary to `#prw-personal-agents` (`C0AM6E2D4R2`).
+
+Call `slack_send_message` with:
+- `channel_id`: `C0AM6E2D4R2`
+- `message`:
+
+```
+*📝 Meeting digest complete — [Meeting Name] ([YYYY-MM-DD])*
+
+*Decisions:* [count] | *Action items:* [count] | *Jira tickets:* [count created] / [count linked]
+
+[List action items as bullets: • [task] → [owner] [[KEY-XXX]](https://canva.atlassian.net/browse/KEY-XXX)]
+
+_Notes saved to `Context/Meeting Notes/[filename].md`_
+```
+
+If there are no action items, post a 1-liner: `*📝 [Meeting Name] digested — no action items.*`
+
+If the Slack post fails, log and continue — do not block.
+
+---
+
 ## Edge cases
 
 - **No decisions found**: Write "No decisions made — discussion/update meeting." Do not invent decisions.

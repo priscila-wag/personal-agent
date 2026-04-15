@@ -43,16 +43,21 @@ slack_search_public_and_private: in:C0A0JA960SV after:yesterday
 ```
 Extract: any questions directed at Pri, any decisions made without her, any blockers raised. Ignore automated bot messages and FYI broadcasts unless they name Pri.
 
-**Goal update detection** — while scanning Slack results, flag any message that:
-- Mentions Pri (`<@U0701AR9B35>`) AND contains any of: `update`, `JIRA`, `goal`, `align`, `GA`, `deadline`, `by [day]`, `before [day]`
-- OR is from a goal/UVSG channel (C0A0JA960SV) and names a goal Pri owns
+**Draft request detection** — while scanning Slack results, flag any message that mentions Pri (`<@U0701AR9B35>`) and matches any of these patterns:
 
-If a goal update request is detected, note:
-- Which goal is being asked about (match to UVSG ticket using the map in `/draft-goal-update` skill)
-- The deadline mentioned, if any
+| Pattern | Draft type | Example trigger |
+|---------|-----------|-----------------|
+| "update", "JIRA", "goal", "GA", "align", "deadline", "by [day]" + goal/UVSG context | `goal_update` | Eve asking goal owners to update Jira |
+| "PRD", "product brief", "write up", "kickoff doc", "requirements" | `prd` | Andi asking for a PRD on a new initiative |
+| "notes", "minutes", "recap", "write up the meeting", "can you document" | `meeting_minutes` | Colleague asking for meeting notes after a sync |
+
+For each match, extract:
+- What specifically is being requested
+- The relevant ticket, meeting, or initiative name
+- The deadline, if mentioned
 - Who asked
 
-Store these as `GOAL_UPDATE_TRIGGERS` — used in Step 1b below.
+Store all matches as `DRAFT_TRIGGERS` — used in Step 1b below.
 
 **Tasks** — scan `Tasks/` for files with `status: s` (in progress) or `priority: P0`. Note titles and due dates only — do not read full files.
 
@@ -60,16 +65,16 @@ Store these as `GOAL_UPDATE_TRIGGERS` — used in Step 1b below.
 
 ### Step 1b — Auto-draft goal updates (if triggered)
 
-If `GOAL_UPDATE_TRIGGERS` is non-empty, run this step before posting the morning brief.
+If `DRAFT_TRIGGERS` is non-empty, run this step before posting the morning brief.
 
-For each triggered goal:
+For each triggered item, call the `/draft` router:
 
-1. Read `/Users/priscila/Documents/Agents/personal-agent-main/.claude/skills/draft-goal-update/SKILL.md` and execute it fully for the relevant UVSG ticket.
-2. The draft-goal-update skill posts its own message to `#prw-personal-agents` (C0AM6E2D4R2) — do not suppress it.
+1. Read `/Users/priscila/Documents/Agents/personal-agent-main/.claude/skills/draft/SKILL.md` and execute it, passing the full context of what was requested (goal update, meeting notes, PRD request — whatever was detected).
+2. The `/draft` skill routes to the correct sub-skill and posts its output to `#prw-personal-agents` (C0AM6E2D4R2) — do not suppress it.
 3. After the draft is posted, add a line to the morning brief under `*⚠️ Heads Up*`:
-   > *🎯 Goal update draft posted for [[UVSG-XXX]](https://canva.atlassian.net/browse/UVSG-XXX) — deadline [date]. Check #prw-personal-agents to review and confirm.*
+   > *🖊️ Draft ready: [type] — [subject]. Check #prw-personal-agents.*
 
-If `GOAL_UPDATE_TRIGGERS` is empty, skip this step entirely.
+If `DRAFT_TRIGGERS` is empty, skip this step entirely.
 
 ---
 

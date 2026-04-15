@@ -39,10 +39,37 @@ Deduplicate across the three result sets by issue key. Max 8 issues total.
 ```
 slack_search_public_and_private: in:#hcf-team after:yesterday
 slack_search_public_and_private: to:me after:yesterday
+slack_search_public_and_private: in:C0A0JA960SV after:yesterday
 ```
 Extract: any questions directed at Pri, any decisions made without her, any blockers raised. Ignore automated bot messages and FYI broadcasts unless they name Pri.
 
+**Goal update detection** — while scanning Slack results, flag any message that:
+- Mentions Pri (`<@U0701AR9B35>`) AND contains any of: `update`, `JIRA`, `goal`, `align`, `GA`, `deadline`, `by [day]`, `before [day]`
+- OR is from a goal/UVSG channel (C0A0JA960SV) and names a goal Pri owns
+
+If a goal update request is detected, note:
+- Which goal is being asked about (match to UVSG ticket using the map in `/draft-goal-update` skill)
+- The deadline mentioned, if any
+- Who asked
+
+Store these as `GOAL_UPDATE_TRIGGERS` — used in Step 1b below.
+
 **Tasks** — scan `Tasks/` for files with `status: s` (in progress) or `priority: P0`. Note titles and due dates only — do not read full files.
+
+---
+
+### Step 1b — Auto-draft goal updates (if triggered)
+
+If `GOAL_UPDATE_TRIGGERS` is non-empty, run this step before posting the morning brief.
+
+For each triggered goal:
+
+1. Read `/Users/priscila/Documents/Agents/personal-agent-main/.claude/skills/draft-goal-update/SKILL.md` and execute it fully for the relevant UVSG ticket.
+2. The draft-goal-update skill posts its own message to `#prw-personal-agents` (C0AM6E2D4R2) — do not suppress it.
+3. After the draft is posted, add a line to the morning brief under `*⚠️ Heads Up*`:
+   > *🎯 Goal update draft posted for [[UVSG-XXX]](https://canva.atlassian.net/browse/UVSG-XXX) — deadline [date]. Check #prw-personal-agents to review and confirm.*
+
+If `GOAL_UPDATE_TRIGGERS` is empty, skip this step entirely.
 
 ---
 

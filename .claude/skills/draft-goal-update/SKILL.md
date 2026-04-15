@@ -87,7 +87,7 @@ Scan `Context/Meeting Notes/` for files from the past 30 days containing the goa
 
 ---
 
-### Step 4 — Draft the update
+### Step 4 — Draft the update and GA slide sentence
 
 Write the update following the template structure from Step 2B (most recent existing comment). If no existing comment found, use this default structure:
 
@@ -111,6 +111,18 @@ Risks & Blockers
 - Short — no sentence should be padded
 - Cite Andi by name when referencing signed-off decisions: *"Agreed with Andi to..."*
 
+**Also draft a GA slide sentence** — one sentence for the Goal Alignment deck (the stakeholder-facing update, not the Jira comment). This is separate from the full update.
+
+Rules for the GA sentence:
+- One sentence only — max 20 words
+- Stakeholder-facing: written for people who don't track the goal week to week
+- Snappy and outcome-focused: what changed or what's happening that they should know
+- Not a summary of the Jira comment — a headline
+- Examples of good GA sentences:
+  - *"Goal rescoped to focus on login incentives — personalisation moved to H2."*
+  - *"Logged-out HA launching soon, unlocking the key driver for this goal."*
+  - *"On track — Quick Actions milestone shipped to 100% of users."*
+
 ---
 
 ### Step 5 — Post draft to #prw-personal-agents
@@ -118,37 +130,29 @@ Risks & Blockers
 Call `slack_send_message` with channel `C0AM6E2D4R2`:
 
 ```
-*📋 Goal update draft ready — [[UVSG-XXX]](https://canva.atlassian.net/browse/UVSG-XXX)*
-_[Goal name]_
-
+*📋 Goal update draft — [[UVSG-XXX]](https://canva.atlassian.net/browse/UVSG-XXX)*
 [Andi sign-off status: ✅ Signed off — "[quote]" OR ⚠️ Discussed — "[quote]" OR ❌ Not found — confirm before posting]
 
----
-[Full draft text, formatted exactly as it would appear in Jira]
----
+*🎯 GA slide sentence*
+[One snappy sentence for the Goal Alignment deck]
 
-Reply *confirm* to post to Jira · *edit [section] [new text]* to change · *skip* to discard
+*📝 Jira comment*
+Run `/jira comment UVSG-XXX` and paste:
+```
+[Full Jira comment text]
+```
 ```
 
-Wait for Pri's response.
+No confirmation needed — both outputs are ready to use directly.
 
 ---
 
-### Step 6 — On "confirm": post to Jira
+### Step 6 — Reply to the original Slack request (if source thread is known)
 
-Call `addCommentToJiraIssue` on the UVSG ticket with the confirmed draft text.
+If the Slack thread where the update was requested is known (e.g. Eva or Simone's post in the goal channel), reply there:
+> *Updated! [UVSG-XXX] — [GA sentence]. Jira comment added.*
 
-Then reply in the same Slack thread:
-> *✅ Posted to [[UVSG-XXX]](https://canva.atlassian.net/browse/UVSG-XXX)*
-
-Optionally: if the Slack thread where the goal update was requested is known (e.g. the channel where Eva or Simone asked for updates), reply there too:
-> *Updated! [[UVSG-XXX]](https://canva.atlassian.net/browse/UVSG-XXX) — [1-line summary of the update]*
-
----
-
-### Step 7 — On "edit [section] [new text]"
-
-Replace the named section in the draft and re-post the full updated draft to the same Slack thread. Repeat Step 5 logic.
+Otherwise, skip this step.
 
 ---
 

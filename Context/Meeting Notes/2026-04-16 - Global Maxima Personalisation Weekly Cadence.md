@@ -1,54 +1,56 @@
 ---
-title: Global Maxima Personalisation Weekly Cadence 2026-04-16
-description: "Pri's help-assisted personalisation goal removed from GM stream; Rosetta, HA glossary, and role personalisation approved for full rollout; Policy Agent at 50% targeting 100% next week."
+title: Global Maxima Personalisation Weekly Cadence — 2026-04-16
+description: "Pri's help-assisted personalisation goal descoped from Global Maxima stream; all H1 personalisation milestones removed, focus shifts to logged-in session increases only."
 type: meeting-note
 created_date: 2026-04-16
 ---
 
-# Global Maxima: Personalisation Weekly Cadence
-*2026-04-16 | ~30 min | [[Yshana Wong]], [[Lucas]], [[Allison Wahl]], [[Jacob Foley]], [[Callum McKay]], [[Arveen Azurin]], [[Nee]], [[Priscila Wagner]], [[Danne Lim]], [[Linette Voller]]*
+# Global Maxima Personalisation Weekly Cadence
+*2026-04-16 | ~30 min | [[Yshana Wong]], [[Lucas]], [[Allison Wahl]], [[Jacob Foley]], [[Callum McKay]], [[Arveen Azurin]], [[Nee]], [[Linette Voller]], [[Danne Lim]], [[Sally]] (next week), Priscila Wagner*
 
 ## Summary
-Pri's help-assisted personalisation goal has been officially descoped from the Global Maxima stream and will move to goal alignment tracking only, now focused exclusively on increasing logged-in sessions — confirmed by Pri and [[Danne Lim]] as the right call given the goals no longer overlap. Multiple personalisation experiments are clearing for full rollout: Rosetta specialist translator, HA glossary, and role personalisation all show positive directional signals (including reduced Zendesk tickets) despite mostly non-significant primary metrics. [[Policy Agent]] is at 50% Omniagent rollout targeting 100% next week post-Canva Create, with the escalation feature cleared for staging.
+Pri's help-assisted personalisation goal is formally removed from the Global Maxima stream — all H1 personalisation milestones descoped, with [[UVSG-614]] now focused exclusively on increasing logged-in HC sessions. The first login incentive experiment (Try In My Design) already shows +0.14% increase across just 15 articles, validating the direction. The rest of the stream is tracking well: Rosetta specialist translations approved for full rollout, glossary experiment wrapping up, role personalisation moving to full rollout.
 
 ## Decisions
-- **Pri's goal removed from Global Maxima stream** — [[UVSG-614]] focuses on login sessions, not personalisation delivery; tracked via goal alignment only from now on. [[Danne Lim]] and Pri agreed the overlap no longer exists; H2 personalisation work will be the right home for future alignment.
-- **Rosetta specialist translator approved for full rollout** — eval results positive on 1–4 scale across locales; rolling out to all owned languages for email and chat.
-- **HA glossary experiment approved for full rollout** — mostly non-significant but reduced Zendesk ticket creation and invisible-good-translation hypothesis validated. Rolling to all owned languages.
-- **Role personalisation proceeding to full rollout** — DS guidance supports rollout despite lack of statistical significance; success metrics trending right for team-leaning intents; guardrails safe. (Note: incorrect pilot split inadvertently concluded experiment — [[Nee]] seeking permission for full rollout.)
-- **Policy Agent escalation feature cleared design LTGM** — moving to staging for Trust and Safety sign-off before HA rollout.
-- **Omniagent Policy Agent targeting 100% rollout** — as early as next week post-Canva Create; HA escalation is next in queue after Omniagent completes.
+- **Pri's goal removed from GM stream** — help-assisted personalisation moves to goal-alignment-only tracking. No overlap with current GM personalisation delivery work; [[UVSG-614]] focus is login sessions, not personalisation variants. [[Yshana Wong]] to announce at next week's GM call.
+- **Rosetta specialist translator: full rollout approved** — evals show consistently better translation quality (1–4 scale) across locales; rolling out to all languages for email and chat. ([[Arveen Azurin]])
+- **Help Assistant glossary experiment: full rollout approved** — mostly non-significant results, but reduced Zendesk tickets and invisible-good-translation hypothesis supports rollout to all owned languages. ([[Nee]])
+- **Role personalisation: full rollout approved** — success metrics trending positively for team-leaning intents; DS guidance and safe guardrails support rollout despite lack of statistical significance. ([[Nee]])
+- **Policy Agent escalation feature: Design LTGM done** — moving to staging for Trust and Safety sign-off before prod rollout. ([[Jacob Foley]])
+- **Omniagent Policy Agent scaling to 100%** — currently at 50%; targeting 100% as early as next week post-Canva Create. ([[Jacob Foley]])
 
 ## Action Items
-| # | Task | Owner | Epic | Due |
-|---|------|-------|------|-----|
-| 1 | Add deck for Global Maxima highlights by tomorrow for team input | [[Yshana Wong]] | [[HELP-3090]] | 2026-04-17 |
-| 2 | Announce Pri's goal removal from GM stream at next week's call | [[Yshana Wong]] | [[HELP-3090]] | 2026-04-23 |
-| 3 | Track additional personalizations above 118 target in governance system | [[Yshana Wong]] | [[HELP-3090]] | — |
-| 4 | Map out additional HubMemory M2 work to flag deadline risks early | [[Lucas]] | [[HELP-3090]] | — |
-| 5 | Add "Do you need help content?" step to experiment rollout checklist | [[Lucas]] | [[HELP-3090]] | — |
-| 6 | Get Rosetta LTGM approvals and roll out to all languages for email/chat | [[Arveen Azurin]] | [[HELP-3090]] | — |
-| 7 | Work with Daniel to store specialist translated prompts in Lang Views for editing | [[Arveen Azurin]] | [[HELP-3090]] | — |
-| 8 | Complete translation glossary quality review in Lang Views before full rollout | [[Nee]] | [[HELP-3090]] | — |
-| 9 | Select next locales for glossary expansion | [[Nee]] | [[HELP-3090]] | — |
-| 10 | Complete end-to-end refunds tool testing and enable full shadowing next week | [[Callum McKay]] | [[HELP-3090]] | — |
-| 11 | Roll out [[HA]] escalation feature to staging for Trust and Safety approval | [[Jacob Foley]] | [[HELP-4319]] | — |
 
-> **Note for Pri:** No direct action items from this meeting. Two items worth tracking as context:
-> - Item 5 (Lucas's help content checklist step) directly affects HC content team workflow — worth following up with Lucas post-Create.
-> - Item 11 (HA escalation to staging) is a near-term dependency for [[logged-out HA]] work under [[HELP-4319]].
+No action items for Pri from this meeting.
+
+*Other team action items (for reference):*
+
+| Owner | Task | Due |
+|-------|------|-----|
+| [[Yshana Wong]] | Add deck for GM highlights by tomorrow for team input | 2026-04-17 |
+| [[Yshana Wong]] | Announce Pri's goal removal from GM stream at next week's call | 2026-04-23 |
+| [[Yshana Wong]] | Track additional personalizations above 118 target in governance system | — |
+| [[Lucas]] | Map out additional HubMemory M2 work to flag deadline risks early | — |
+| [[Lucas]] + Pilot team | Add "Do you need help content?" step to experiment rollout checklist | — |
+| [[Arveen Azurin]] | Get Rosetta LTGM approvals and roll out to all languages for email/chat | — |
+| [[Arveen Azurin]] | Work with Daniel to store specialist translated prompts in Lang Views | — |
+| [[Nee]] | Complete translation glossary quality review in Lang Views before full rollout | — |
+| [[Nee]] | Select next locales for glossary expansion | — |
+| [[Callum McKay]] | Complete end-to-end refunds tool testing; enable full shadowing next week | 2026-04-23 |
+| [[Jacob Foley]] | Roll out Help Assistant escalation to staging for Trust and Safety approval | — |
+| [[Jacob Foley]] | Monitor escalation ticket volumes during HA rollout | — |
+| [[Jacob Foley]] | Explore crisis line API options with Trust and Safety | — |
 
 ## Open Questions & Blockers
-- **HubMemory M2 deadline at risk (May 30)** — unexpected work (live chat history, support service delays) may push beyond target; prod review tomorrow with [[Allison Wahl]] and [[Lucas]] to discuss scope reduction or deadline extension.
-- **Crisis line integration** — LLMs hallucinate crisis hotline numbers; need API with external service or internal database; Trust and Safety to weigh in on preferred approach. [[Jacob Foley]] investigating.
-- **Auto-escalation for minors** — no current mechanism to escalate minors without user consent; legal ([[Andi]]) reviewing strict requirements. Potential new feature if legal says mandatory.
-- **Feature flag personalisation feasibility** — Linette flagged post-Create exploration to scope feature-flag-based personalisation as potential H2 work; pilot team interested. No owner yet.
-- **Control panel build vs buy** — design doc for UI requirements in progress; decision expected mid-cycle.
-- **Role personalisation experiment**: incorrect pilot split inadvertently concluded experiment; [[Nee]] seeking full rollout permission.
+- **HubMemory M2 deadline at risk (May 30)** — unexpected work (live chat history, support service delays) may push delivery; prod review scheduled to discuss scope reduction or extension. [[Allison Wahl]] perspective: May 30 was set before full goal discovery — extending to deliver more value may be right.
+- **Role personalisation experiment data issue** — incorrect pilot split correction inadvertently concluded the experiment; seeking permission for full rollout as a workaround.
+- **Crisis line integration** — LLMs hallucinate hotline numbers; needs API integration with an external always-updated database or an internal one. Trust and Safety to advise.
+- **Auto-escalation for minors** — no current pattern to auto-escalate without user consent when a minor self-identifies; legal reviewing strict requirements.
+- **Feature flag personalisation feasibility** — [[Linette Voller]] flagged worth scoping for H2; pilot team interested. Size unknown.
 
 ## Context
-- **[[Canva Create]] context**: the Canva AI 2.0 personalisation was deployed via a brute-force quick fix — feature flag + locale check + admin permissions. This reignited interest in feature-flag-based HC personalisation at scale.
-- **[[UVSG-614]] update**: Pri confirmed the first "Try In My Design" login experiment ran with only 15 articles and delivered +0.14% login sessions — directionally strong. Doubling down on this approach for H1.
-- **H2 personalisation setup**: [[Linette Voller]] flagged a cross-team content variants workshop next week led by [[Sally]] — directly relevant to Pri's H2 personalisation planning (noted in [[GOALS.md]] opportunity for Apr 20 workshop). No action required but prep for H2 scope position is valuable.
-- **Personalisation taxonomy**: Jacob described using Contentful "experiences" as long-lasting taxonomy markers — content and users both tagged when new features roll out. This is the emerging standard for feature-flag HC personalisation.
-- **Rosetta + voice/tone milestone**: with Rosetta's launch ingesting Canva style guides in-language, a large portion of voice/tone personalisations will arrive as a side-effect — helping Arveen's team hit 118+ personalisations by April.
+- Pri attended to formally confirm the goal descoping, then will drop off after next week's announcement. No further obligations to this cadence.
+- H2 personalisation (user attribute-based variants, content variants by feature flag) is where Pri's team will re-engage with GM stream. [[UVSG-614]] login session focus is the H1 unlock for this.
+- The personalisation workshop next week (led by [[Sally]]) is about content variant handling in Contentful — relevant to [[HCF]] and [[Content Automation]] work. Consider sending a rep given H2 alignment implications.
+- [[Linette Voller]] running a post-Create retro on HC/HA content alignment gaps — HA didn't have all necessary content before Create. [[HCF]] process issue worth monitoring.
+- Lucas's proposal to add a help-content check to the Pilot experiment rollout checklist is a low-effort systemic fix for recurring content-experiment misalignment. Worth supporting.

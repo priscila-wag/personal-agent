@@ -18,10 +18,20 @@ Run all steps in sequence. Do not ask for confirmation between steps unless expl
 ### Step 1 — Fetch the most recent Zoom meeting
 
 1. Call `mcp__zoom-notes__list_notes` with `limit: 10` and `from` set to 5 days ago (YYYY-MM-DD format).
-2. Identify the **most recent** note by date. If there are multiple meetings on the same day, pick the one that started latest.
-3. **Idempotency check** — before fetching the transcript, derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` (same format as Step 5). Check if a file with that name already exists in `Context/Meeting Notes/`. If it does, stop immediately and output: *"Notes already exist for [meeting name] ([date]) — skipping to avoid duplicates."* Do not fetch the transcript, do not create Jira tickets.
-4. Call `mcp__zoom-notes__fetch_transcript` with the exact note name returned.
-5. If no transcript content is available (meeting too recent, recording not yet processed), tell the user: *"Transcript not ready yet — Zoom usually takes 5–10 min after the meeting ends. Run `/meeting-digest` again shortly."* Then stop.
+2. **Auth failure handling** — if the call returns an authentication error (401, "Authentication expired", or similar):
+   - The MCP server will automatically try to refresh the token via the browser. If that also fails (SSO cookies expired), immediately call `mcp__0deb4b0b-cc05-4ae4-8e5e-08d6c09985dd__slack_send_message` with:
+     - `channel_id`: `C0AM6E2D4R2`
+     - `message`: `⚠️ *Meeting digest blocked — Zoom login required*\n\nThe Zoom SSO session has expired. Open <https://canva.zoom.us/notes#/my_notes|zoom.us/notes> in your browser and complete SSO login, then the next scheduled run will work automatically.\n\n_No action needed if you don't have any new meetings to digest._`
+   - Then stop.
+3. Identify the **most recent** note by date. If there are multiple meetings on the same day, pick the one that started latest.
+4. **Idempotency check** — before fetching the transcript:
+   - First, run `git -C /Users/priscila/Documents/Agents/personal-agent-main pull --ff-only` to ensure the working directory reflects any notes written by previous scheduled runs.
+   - Derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` (same format as Step 5).
+   - Check if a file with that name already exists in `Context/Meeting Notes/` using the Bash tool: `ls "/Users/priscila/Documents/Agents/personal-agent-main/Context/Meeting Notes/" | grep "[filename]"`.
+   - If it exists, stop immediately and output: *"Notes already exist for [meeting name] ([date]) — skipping to avoid duplicates."* Do not fetch the transcript.
+   - Also check git log: `git -C /Users/priscila/Documents/Agents/personal-agent-main log --oneline -10 | grep "[Meeting Name]"` as a secondary check in case the file was written but not visible.
+5. Call `mcp__zoom-notes__fetch_transcript` with the exact note name returned.
+6. If no transcript content is available (meeting too recent, recording not yet processed), tell the user: *"Transcript not ready yet — Zoom usually takes 5–10 min after the meeting ends. Run `/meeting-digest` again shortly."* Then stop.
 
 ---
 
@@ -121,92 +131,21 @@ Confirm to the user: *"Meeting notes saved to Context/Meeting Notes/[filename].m
 
 ---
 
-### Step 6 — Deduplicate against Jira
+### Step 6 — SKIP
 
-Before presenting anything to Pri, check each action item against existing Jira issues to avoid creating duplicates.
-
-For each action item:
-
-1. **Search by keywords across both projects** — extract 2–4 key terms from the task description and run two queries in parallel:
-   ```
-   searchJiraIssuesUsingJql: project = HELP AND summary ~ "[keyword]" AND statusCategory != Done ORDER BY updated DESC
-   searchJiraIssuesUsingJql: project = UVSG AND summary ~ "[keyword]" AND statusCategory != Done ORDER BY updated DESC
-   ```
-   Always search both HELP and UVSG. UV goals live in UVSG; task-level work lives in HELP. Missing the UVSG search will miss official goals entirely.
-
-2. **Search within the target epic** — run a second query scoped to the matched epic:
-   ```
-   searchJiraIssuesUsingJql: "Epic Link" = [epic-key] AND statusCategory != Done ORDER BY updated DESC
-   ```
-   If the action item mentions a mobile/UV goal, also check `project = UVSG AND issuetype = "Team Goal"` for matches.
-
-3. **Classify each action item** into one of three outcomes:
-
-   | Outcome | When to use | What to do |
-   |---|---|---|
-   | **CREATE** | No matching issue found, or existing issues are clearly different in scope | Will create a new Jira ticket |
-   | **LINK** | An existing open issue covers this action item — same intent, same scope | No new ticket; note the existing issue number |
-   | **OVERLAP** | An existing issue is related but not identical — partial match | Flag for Pri to decide: add a comment to existing, or create a sub-task |
-
-4. Note the confidence level for LINK/OVERLAP matches: **high** (title clearly matches) or **low** (loose keyword match only).
+Jira deduplication is disabled. Skip this step entirely and proceed to Step 7.
 
 ---
 
-### Step 7 — Review action items with Pri
+### Step 7 — SKIP
 
-Display a single consolidated table combining action items, dedup findings, and recommendations. Say:
-
-> **Action items checked against Jira — review before I create tickets:**
->
-> [table]
->
-> **Legend:** ✅ CREATE — no duplicate found &nbsp;|&nbsp; 🔗 LINK — existing issue covers this &nbsp;|&nbsp; ⚠️ OVERLAP — related issue exists, your call
->
-> Say **"create"** to action all ✅ rows, **"skip [#]"** to drop an item, **"edit [#]"** to change a row, or **"link [#]"** to confirm a 🔗 match instead of creating.
-
-**Table format:**
-
-| # | Task | Owner | Epic | Due | Jira match | Rec |
-|---|------|-------|------|-----|------------|-----|
-| 1 | Create HELP-4139 milestones | Pri | HELP-4139 | Today | — | ✅ CREATE |
-| 2 | Schedule team walkthrough | Pri | HELP-4139 | Today | HELP-4XXX: "Mobile UX team sync" (open) | ⚠️ OVERLAP |
-| 3 | Share Figma audit design with Kunday | Pri | HELP-4139 | Today | — | ✅ CREATE |
-
-Wait for Pri's response before proceeding.
+Jira review table is disabled. Skip this step entirely and proceed to Step 8.
 
 ---
 
-### Step 8 — Create or link Jira tickets
+### Step 8 — SKIP
 
-Process each confirmed row based on its outcome:
-
-**For ✅ CREATE rows:**
-1. Call `mcp__3b804fcf-2cd6-468f-999d-75e72c3392d3__createJiraIssue` with:
-   - **project**: HELP (or UVSG if the epic is a UVSG goal)
-   - **summary**: the action item text (concise, imperative: "Fix prompts review for logged-out HA")
-   - **issue type**: Task
-   - **assignee**: the confirmed owner's Jira account ID (look up with `lookupJiraAccountId` if needed)
-   - **description**: include the meeting name, date, and the context sentence from the transcript
-   - **parent/epic link**: the confirmed epic key
-
-**For 🔗 LINK rows (confirmed by Pri):**
-1. Call `mcp__3b804fcf-2cd6-468f-999d-75e72c3392d3__addCommentToJiraIssue` on the matched issue with:
-   - *"Raised in [Meeting Name] on [date]: [1-sentence context from transcript]"*
-2. No new ticket created.
-
-**For ⚠️ OVERLAP rows — follow Pri's instruction:**
-- "add comment" → treat as 🔗 LINK above
-- "create sub-task" → create a child task under the matched issue instead of a standalone ticket
-
-After all rows are processed, output a summary:
-
-> **Jira update complete:**
-> - ✅ HELP-XXXX created: [task] → @[owner]
-> - 🔗 HELP-XXXX commented: [existing issue title]
->
-> Meeting notes file updated with ticket numbers.
-
-Update the meeting notes file: replace each action item's Epic column with the actual Jira issue number (created or linked).
+Jira ticket creation is disabled. Skip this step entirely and proceed to Step 9.
 
 ---
 

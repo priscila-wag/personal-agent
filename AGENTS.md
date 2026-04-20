@@ -259,6 +259,23 @@ Examples:
 - "Remember that I prefer..." — saves to Context/Memory
 - "What have I learned about..." — searches Context/Memory/learnings.md
 
+## Git Workflow
+
+Always use feature branches — never commit directly to `main`.
+
+Before making any file changes in a session:
+1. Create a branch: `git checkout -b <short-descriptive-name>` (e.g. `skill/meeting-digest-fix`, `wrap/cw17`, `chore/update-goals`)
+2. Make changes on that branch
+3. When the user asks to create a PR, commit, push the branch, and open a PR into `main` with `gh pr create`
+
+Branch naming convention:
+- `skill/<name>` — changes to `.claude/skills/`
+- `wrap/<cw>` — weekly wrap sessions
+- `chore/<topic>` — config, AGENTS.md, or system updates
+- `task/<name>` — task file changes
+
+If a session has already committed to `main` without a branch, note it but don't rewrite history — apply the workflow from the next session.
+
 ## Interaction Style
 
 - Be direct, friendly, and concise.

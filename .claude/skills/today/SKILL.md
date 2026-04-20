@@ -33,8 +33,9 @@ Pull signals from yesterday. Use the current date to compute "yesterday" for all
 - If not available, note: *"No messaging tools connected — paste any important highlights so I can factor them in."*
 
 **Zoom** (via Zoom MCP, if available):
-- Check for recordings or transcripts from yesterday's meetings using `download_transcripts` or `fetch_transcripts`
-- Extract: action items, decisions, follow-ups from meeting transcripts
+- Search for yesterday's meetings: call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_meetings` with `from`/`to` set to yesterday's full-day range in ISO 8601 UTC (Pri's timezone: `Australia/Sydney`, AEST UTC+10 / AEDT UTC+11)
+- For each meeting found, call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_recording_resource` with `meetingId` (the `meeting_uuid`) and `types: "transcript,summary,nextStep"`
+- Extract: action items, decisions, follow-ups from transcripts and Zoom's AI-generated next steps
 - If Zoom MCP is not available, check `Context/Meeting Notes/` for manually added notes from yesterday
 
 **Jira** (via Jira MCP, if available):

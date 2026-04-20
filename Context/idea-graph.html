@@ -92,347 +92,262 @@
 <script>
 const RAW = {
   "metadata": {
-    "generated": "2026-04-14",
+    "generated": "2026-04-20",
     "window_days": 30,
-    "node_counts": { "pri-idea": 14, "slack-idea": 13, "jira-project": 12, "strategy-theme": 6, "person": 12 },
-    "edge_count": 66
+    "node_counts": { "pri-idea": 13, "slack-idea": 8, "jira-project": 10, "strategy-theme": 4, "person": 8 },
+    "edge_count": 48
   },
   "nodes": [
-
-    // ── PRI'S IDEAS (purple) ──────────────────────────────────────────────
-
     {
-      "id": "pri-uvsg614-rescope",
+      "id": "half-sheet-mobile-pattern",
       "type": "pri-idea",
-      "label": "UVSG-614 Rescoped",
-      "content": "Personalisation milestones removed from UVSG-614. Goal now focuses on two concrete deliverables: logged-out HA login incentive (HELP-4319) and no-reply email deep link (HELP-4340).",
-      "source": "2026-04-14 - Kunday Pri 1:1.md",
+      "label": "Half-sheet HA on mobile",
+      "content": "Half-sheet as default Help Assistant pattern on mobile with 3 states: full-screen (typing), half-sheet (default), minimised (iOS Mail draft pattern). Reuses existing Canva AI easel elements — front-end only, no backend changes.",
+      "source": "Matthew B - Canva AI + HC Integration 2026-04-07.md, 2026-04-14 - Kunday Pri 1:1.md",
       "date": "2026-04-14",
-      "keywords": ["UVSG-614", "logged-out HA", "no-reply email", "rescoped"]
+      "keywords": ["half-sheet", "mobile", "help assistant", "UVSG-1343"]
     },
     {
-      "id": "pri-mobile-milestones",
+      "id": "logged-out-ha-launch",
       "type": "pri-idea",
-      "label": "Mobile UX Milestones (3)",
-      "content": "Three confirmed deliverables for UVSG-1343: (1) UI/UX consistency bug fixes, (2) help entry point on settings screen top-right, (3) half-sheet for in-editor context. Milestone 3 is conditional on design LGTM.",
+      "label": "Logged-out HA launch",
+      "content": "Launch Help Assistant for logged-out users with login incentive prompt (TIMDL). Legal cleared. Willian building; Pri's work is content + login prompt copy.",
       "source": "2026-04-14 - Kunday Pri 1:1.md",
       "date": "2026-04-14",
-      "keywords": ["UVSG-1343", "mobile UX", "half-sheet", "settings entry point", "HELP-4139"]
+      "keywords": ["logged-out", "TIMDL", "login incentive", "HELP-4319", "UVSG-614"]
     },
     {
-      "id": "pri-half-sheet",
+      "id": "no-reply-email-deep-links",
       "type": "pri-idea",
-      "label": "Half-sheet in-editor help",
-      "content": "Half-sheet reuses existing Canva AI easel elements — front-end only, no backend changes. Allows in-editor contextual help without leaving the design flow. Milestone 2 of UVSG-1343.",
+      "label": "No-reply email deep links",
+      "content": "Add targeted CTAs and deep links in no-reply emails directing users to specific help guidance. Canva sends billions of no-reply emails; users replying to them are a missed help opportunity. Owner: Marketing/Hype team. Dependency: Messaging Platform.",
       "source": "2026-04-14 - Kunday Pri 1:1.md",
       "date": "2026-04-14",
-      "keywords": ["half-sheet", "in-editor help", "UVSG-1343", "mobile"]
+      "keywords": ["no-reply email", "HELP-4340", "UVSG-614", "deep link"]
     },
     {
-      "id": "pri-content-consolidation",
+      "id": "unified-kb-design-school",
       "type": "pri-idea",
-      "label": "HC + DS + Marketing Consolidation",
-      "content": "Proposal to converge Help Center, Design School, and marketing content into a unified platform. Discussed with Andi — spawned 3 Jira tasks (HELP-4369, HELP-4370, HELP-4371). Different CMS systems are the current blocker; DS API integration already bridges search. Learning content and help content have different rhythms but share the same production problem: expensive, goes stale fast, hard to localise.",
-      "source": "HELP-4369 / HELP-4370 / HELP-4371 (created Apr 7 post-Andi 1:1); DM to Danne Lim Apr 13",
+      "label": "Unified KB: HC + Design School",
+      "content": "A RAG layer combining Help Center, Design School, and marketing content into a modular sub-agent for richer AI answers. Approved as 'tool, not merge' POC at product review — map top 10 design intents, build prototype, validate with users.",
+      "source": "2026-04-17 - Product Review - Fortnightly.md, 2026-04-15 - Priscila - Andi.md",
+      "date": "2026-04-17",
+      "keywords": ["unified KB", "Design School", "RAG", "HELP-3820", "HELP-4370"]
+    },
+    {
+      "id": "no-dead-ends-ha-canvaai",
+      "type": "pri-idea",
+      "label": "No Dead Ends: HA to Canva AI",
+      "content": "Seamless intent-based automatic handoff between Help Assistant and Canva AI. Under UVSG-615 as 'No Dead Ends' milestone, launching this cycle. Design review with Canva AI team in progress.",
+      "source": "2026-04-17 - Product Review - Fortnightly.md",
+      "date": "2026-04-17",
+      "keywords": ["No Dead Ends", "UVSG-615", "Canva AI", "handoff", "routing"]
+    },
+    {
+      "id": "help-memory-m2",
+      "type": "pri-idea",
+      "label": "Help Memory Milestone 2",
+      "content": "Targeting 6,000 monthly duplicate tickets and disconnected chats. Priority order: (1) reconnect users to open specialist chats, (2) email ticket follow-ups, (3) HA session continuity. User testing required before finalising session model ('continue thread' vs 'inbox model').",
+      "source": "2026-04-17 - Product Review - Fortnightly.md",
+      "date": "2026-04-17",
+      "keywords": ["Help Memory", "UVSG-615", "duplicate tickets", "session continuity"]
+    },
+    {
+      "id": "hc-ai-convergence",
+      "type": "pri-idea",
+      "label": "HC AI mode convergence",
+      "content": "HC AI mode design has 3 diverging directions after weeks of exploration. Convergence session with Simone, Matthew, Pri, and Talia scheduled post-GA to narrow to 2-3 directions.",
+      "source": "2026-04-16 - Pre-Goal Alignment Monthly Check in.md",
+      "date": "2026-04-16",
+      "keywords": ["HC AI mode", "UVSG-615", "convergence", "design direction"]
+    },
+    {
+      "id": "jira-first-goal-process",
+      "type": "pri-idea",
+      "label": "Jira-first goal change process",
+      "content": "Replace ad-hoc multi-tool mid-cycle changes with Jira as single source of truth: flagged goal cards, weekly Monday batch review, Slack-to-Jira LGTM bot. Piloting with UVSG AI goals first. Directly triggered by UVSG-615 change request friction.",
+      "source": "2026-04-17 - Proposed mid-cycle process.md",
+      "date": "2026-04-17",
+      "keywords": ["Jira", "mid-cycle", "UVSG-615", "goal change", "process"]
+    },
+    {
+      "id": "mobile-activation-parity",
+      "type": "pri-idea",
+      "label": "Mobile activation parity goal",
+      "content": "Mobile help activation rate 59.7% vs desktop 66.5% — goal is to close the gap. Primary metric: Canva product activation within 24hrs of help use (share/publish/download). Confirmed via Snowflake by Damien. Goal: 'Improve Mobile Help UX to increase mobile activation by 2%'.",
+      "source": "2026-04-14 - Mobile UX Goal - Pri & Damien.md",
+      "date": "2026-04-14",
+      "keywords": ["mobile activation", "UVSG-1343", "desktop parity", "59.7%", "66.5%"]
+    },
+    {
+      "id": "design-school-integration",
+      "type": "pri-idea",
+      "label": "Design School + HC platform",
+      "content": "Pri's strategic white whale: integrate Design School content into HC to create a unified knowledge platform. Andi validated direction. PRD to be sent to Andi, Chelsea, and Sarah. Requires alignment with Sergey/Drew on Magic Answer RAG architecture.",
+      "source": "2026-04-15 - Priscila - Andi.md",
+      "date": "2026-04-15",
+      "keywords": ["Design School", "Magic Answer", "RAG", "HELP-4370", "HELP-4369", "unified platform"]
+    },
+    {
+      "id": "pre-editor-design-gen",
+      "type": "pri-idea",
+      "label": "Pre-editor design gen via HA",
+      "content": "Strategic concept: user generates first design draft via HA (in HC or editor) then hands off to Canva AI for continued editing. Targets users currently using ChatGPT/Claude for doc/presentation research before opening Canva.",
+      "source": "Matthew B - Canva AI + HC Integration 2026-04-07.md",
       "date": "2026-04-07",
-      "keywords": ["content consolidation", "Design School", "Help Center", "marketing", "unified platform", "HELP-4369"]
+      "keywords": ["pre-editor", "design generation", "HA", "Canva AI", "UVSG-615"]
     },
     {
-      "id": "pri-unified-search",
+      "id": "screen-recording-experiment",
       "type": "pri-idea",
-      "label": "Unified HC + DS Search",
-      "content": "Mix Help Center and Design School content in the same search results. Users are task-focused, not platform-focused — they want the right answer regardless of whether it comes from HC or DS. DS already appearing in HC search via DS API as of Aug 2025.",
-      "source": "#design-school-x-help-centre (Jul 2025, voted #1 experiment); rollout Aug 2025",
-      "date": "2025-08-29",
-      "keywords": ["unified search", "Design School", "Help Center", "content integration", "search results"]
+      "label": "Screen recording experiment",
+      "content": "3-variant experiment for screen recording in help: fake door, native instructions, built-in recording. Target Chrome/Edge on Windows first. Kerry's initiative. Mobile (iOS native param) simpler than expected.",
+      "source": "2026-04-17 - Product Review - Fortnightly.md",
+      "date": "2026-04-17",
+      "keywords": ["screen recording", "HELP-4139", "Kerry", "experiment"]
     },
     {
-      "id": "pri-contentful-mcp",
+      "id": "canvas-cms-overhaul",
       "type": "pri-idea",
-      "label": "Contentful MCP Guide Generation",
-      "content": "Using Contentful MCP to auto-generate guides that follow Design School style — pulling step-by-step content from Contentful and structuring it using AI with JTBD framing. Claude skill created and shared in #design-school-x-help-centre. DS team exploring but haven't adopted it in practice yet.",
-      "source": "#design-school-x-help-centre (Feb–Mar 2026); #help-content-and-findability-internal (Feb 2026)",
-      "date": "2026-03-10",
-      "keywords": ["Contentful MCP", "AI guide generation", "Design School style", "automation", "Claude skill"]
+      "label": "Canvas CMS overhaul opportunity",
+      "content": "MarTech/Product Platform have an H2 goal to overhaul Canvas CMS into proper content infrastructure. Sally flagged this as a significant enabler for Unified KB POC — worth aligning HCF roadmap to this.",
+      "source": "2026-04-17 - Product Review - Fortnightly.md",
+      "date": "2026-04-17",
+      "keywords": ["Canvas CMS", "MarTech", "content infrastructure", "HELP-3820"]
     },
-    {
-      "id": "pri-content-boundaries",
-      "type": "pri-idea",
-      "label": "DS vs HC Content Boundaries",
-      "content": "Design School for high-level workflows and learning mindset (users happy to spend hours). Help Center for step-by-step feature instructions and in-the-moment unblocking (1 min max video). DS video tutorials failed experiment in HC because they cover too much. Clear boundary prevents duplication.",
-      "source": "#design-school-x-help-centre (Feb 2026); DM to Danne Lim Apr 13",
-      "date": "2026-02-05",
-      "keywords": ["content boundaries", "Design School", "Help Center", "workflows", "step-by-step"]
-    },
-    {
-      "id": "pri-ai-guide-gen",
-      "type": "pri-idea",
-      "label": "AI-Generated Step Guides",
-      "content": "AI reads from Design School and Contentful to generate how-to guides automatically. The system should detect when instructions are missing or incomplete, and follow content creator intent rather than hallucinating solutions.",
-      "source": "#design-school-x-help-centre (Feb 2026)",
-      "date": "2026-02-18",
-      "keywords": ["AI guide generation", "Contentful", "Design School", "step detection", "automation"]
-    },
-    {
-      "id": "pri-help-as-ssot",
-      "type": "pri-idea",
-      "label": "HC as SSOT for All Education",
-      "content": "Help Center content should be the Single Source of Truth feeding into Design School guides, enterprise training, and all Canva educational content — not duplicated across teams. DS producing JTBD 'Guides' without using HC How To content is a waste. The Contentful Claude skill is the first bridge. HC's knowledge of feature-level steps is the foundation every educational surface should build on.",
-      "source": "Andi 1:1 Apr 9 (education space exploration); Laura sync Apr 10; DM to Danne Lim Apr 13",
-      "date": "2026-04-13",
-      "keywords": ["SSOT", "single source of truth", "Design School", "enterprise training", "education", "Help Center"]
-    },
-    {
-      "id": "pri-llm-ds-plus-hc",
-      "type": "pri-idea",
-      "label": "LLM reading DS + HC to answer users",
-      "content": "Explicit statement to Laura Derman (Apr 10): 'I kind of feel like we need to create a LLM that reads from design school and from help content and actually answers our users.' This is the content-layer version of Matthew's surface-layer unification vision — both arrive at the same point from different angles.",
-      "source": "[My note] Pri/Laura Sync 2026-04-10 (Zoom transcript)",
-      "date": "2026-04-10",
-      "keywords": ["LLM", "Design School", "Help Center", "unified content", "answers", "AI"]
-    },
-    {
-      "id": "pri-unified-ai-surface",
-      "type": "pri-idea",
-      "label": "Endorse: one Ask Canva AI surface",
-      "content": "At UV Product Review (Apr 13): 'This is the first time that I see such a cohesive vision for help.' Response to Matthew B's proposal to kill Help Assistant as a separate surface and merge into Ask Canva. Pri endorses the direction; practical phasing agreed: keep bottom-right entry point while converging the backend.",
-      "source": "[My note] Andi Schuster's Personal Meeting Room 2026-04-13 (UV Product Review transcript)",
-      "date": "2026-04-13",
-      "keywords": ["Ask Canva", "unified AI surface", "Help Assistant", "Matthew", "UV Product Review"]
-    },
-    {
-      "id": "pri-hc-platformization",
-      "type": "pri-idea",
-      "label": "HC as platform → Affinity/Leonardo",
-      "content": "Help becomes a platform other products embed: AI-first HC in May → platformize → Affinity, Leonardo, Pixlr in 2 weeks per product. From Laura sync Apr 10 — this is the infra play that makes HC SSOT technically possible at scale.",
-      "source": "[My note] Pri/Laura Sync 2026-04-10 (Zoom transcript)",
-      "date": "2026-04-10",
-      "keywords": ["platformization", "Affinity", "Leonardo", "Pixlr", "Help Center", "platform"]
-    },
-    {
-      "id": "pri-contentful-skill-for-ds",
-      "type": "pri-idea",
-      "label": "Claude Skill: HC content for DS guides",
-      "content": "Built a Claude skill that connects to Contentful MCP — DS writers install it, ask for a topic, it surfaces relevant HC How To articles and drafts guide text citing sources. Shared in #design-school-x-help-centre Mar 2026. Mikaela Griffith testing it on wedding stationery brief. This is the practical SSOT bridge while CMS systems remain separate.",
-      "source": "#design-school-x-help-centre (Mar 10–20, 2026); #help-content-and-findability-internal (Feb 2026)",
-      "date": "2026-03-10",
-      "keywords": ["Claude skill", "Contentful", "Design School", "How To", "HC content", "SSOT bridge"]
-    },
-    {
-      "id": "pri-ds-hc-same-platform",
-      "type": "pri-idea",
-      "label": "DS + HC will be one platform one day",
-      "content": "From DM to Danne Lim (Apr 13, 2026): 'Sarah, DS PM, and I believe that one day DS and HC will belong in the same platform, but we haven't traced how that would come to be.' Also: DS 'Guides' being created without leveraging HC content is the duplication risk that triggered the Claude skill. CMS systems (Canva CMS vs Contentful) are the current structural blocker.",
-      "source": "DM to Danne Lim (Group Lead UV), Apr 13 2026",
-      "date": "2026-04-13",
-      "keywords": ["DS", "HC", "same platform", "one platform", "Danne", "Sarah Stocks", "CMS", "consolidation"]
-    },
-
-    // ── JIRA PROJECTS (orange) ────────────────────────────────────────────
-
     {
       "id": "UVSG-614",
       "type": "jira-project",
-      "label": "UVSG-614: Logged-in AI HC",
-      "content": "Increase logged-in AI Help Center sessions by 5% to provide user-aware help guidance. H1 primary goal, Building status.",
-      "date": "2026-04-14",
-      "keywords": ["UVSG-614", "logged-in", "AI Help Center", "5%"]
+      "label": "UVSG-614: Logged-in HC sessions",
+      "content": "Increase logged-in AI Help Center sessions by 2% to provide user-aware help guidance. Status: Building. Due Jun 30.",
+      "date": "2026-04-17",
+      "keywords": ["logged-in", "HC sessions", "login incentive", "TIMDL", "no-reply email"]
+    },
+    {
+      "id": "UVSG-615",
+      "type": "jira-project",
+      "label": "UVSG-615: Integrated AI HC",
+      "content": "Launch Integrated AI Help Centre and Assistant. Split panel rolled out to 100% Apr 7. AI chat near-complete. Date extended to May 15 (LGTM'd Apr 16). HC AI convergence session needed post-GA.",
+      "date": "2026-04-17",
+      "keywords": ["split panel", "AI chat", "HC AI mode", "No Dead Ends", "Help Memory"]
     },
     {
       "id": "UVSG-1343",
       "type": "jira-project",
       "label": "UVSG-1343: Mobile Help UX",
-      "content": "Improve Mobile Help UX — goal name TBC pending Damien's Snowflake data confirming desktop > mobile activation (target: desktop parity). Three milestones confirmed Apr 14 (Kunday 1:1). Mobile help rate 0.9% vs desktop 2%.",
+      "content": "Improve Mobile Help UX to increase mobile activation by 2%. Three milestones: UI/UX bug fixes, settings entry point, half-sheet for in-editor context. Simone is goal owner.",
       "date": "2026-04-14",
-      "keywords": ["UVSG-1343", "mobile", "mobile activation", "desktop parity", "Damien Kime", "Snowflake"]
+      "keywords": ["mobile", "half-sheet", "settings entry point", "activation", "UVSG-1343"]
+    },
+    {
+      "id": "UVSG-1345",
+      "type": "jira-project",
+      "label": "UVSG-1345: Unify HA and Canva AI",
+      "content": "Unify Help Assistant and Canva AI with improved routing, CSAT, and escalations. North star: one chat experience from any Canva entry point with intelligent routing. Status: Shaping. Owner: Matthew Baranauskas.",
+      "date": "2026-04-16",
+      "keywords": ["unify", "Canva AI", "routing", "CSAT", "No Dead Ends"]
     },
     {
       "id": "HELP-4319",
       "type": "jira-project",
       "label": "HELP-4319: Logged-out HA",
-      "content": "Launch logged-out users Help Assistant version to incentivise login. P1 milestone under UVSG-614. Willian is dev lead.",
-      "date": "2026-04-14",
-      "keywords": ["HELP-4319", "logged-out HA", "login incentive", "Help Assistant"]
+      "content": "[P1] Launch HA logged-out version to incentivise log in. Status: Backlog. Legal cleared. Willian building.",
+      "date": "2026-04-16",
+      "keywords": ["logged-out", "HA", "login", "TIMDL"]
     },
     {
       "id": "HELP-4340",
       "type": "jira-project",
-      "label": "HELP-4340: No-Reply Email Help",
-      "content": "Improve Help Access from No-Reply Emails — deep link users from email comms directly into help. P1, Shaping, due May 1. Marketing/Hype owner.",
+      "label": "HELP-4340: No-reply email help",
+      "content": "[P1] Improve Help Access from No-Reply Emails. Status: Shaping. Due May 1. Marketing/Hype team as external dependency.",
       "date": "2026-04-14",
-      "keywords": ["HELP-4340", "no-reply email", "deep link", "help access"]
-    },
-    {
-      "id": "HELP-4369",
-      "type": "jira-project",
-      "label": "HELP-4369: Consolidation Proposal",
-      "content": "Write up content platform consolidation proposal (HC + Design School + marketing). Created Apr 7 after Andi 1:1 discussion.",
-      "date": "2026-04-07",
-      "keywords": ["HELP-4369", "content consolidation", "Design School", "marketing", "HC"]
-    },
-    {
-      "id": "HELP-4370",
-      "type": "jira-project",
-      "label": "HELP-4370: Unified Content LLM",
-      "content": "Build prototype LLM trained on HC + Design School + marketing to demo unified content value. Created Apr 7. Directly maps to pri-llm-ds-plus-hc idea from Laura sync.",
-      "date": "2026-04-07",
-      "keywords": ["HELP-4370", "LLM", "prototype", "unified content", "Design School", "HC", "marketing"]
-    },
-    {
-      "id": "HELP-4371",
-      "type": "jira-project",
-      "label": "HELP-4371: Chelsea Nordstrom",
-      "content": "Reach out to Chelsea Nordstrom re: content consolidation initiative. Identified as a key stakeholder for the HC + DS + marketing convergence.",
-      "date": "2026-04-08",
-      "keywords": ["HELP-4371", "Chelsea Nordstrom", "content consolidation", "stakeholder"]
-    },
-    {
-      "id": "HELP-4279",
-      "type": "jira-project",
-      "label": "HELP-4279: Content Knowledge Graph",
-      "content": "Build a Canva content knowledge graph / shared glossary for the canvanauts supergroup. Ready status — overlaps directly with HC + DS consolidation idea and HC-as-SSOT thesis.",
-      "date": "2026-04-07",
-      "keywords": ["HELP-4279", "knowledge graph", "glossary", "canvanauts", "content"]
+      "keywords": ["no-reply email", "deep link", "CTA", "help access"]
     },
     {
       "id": "HELP-3785",
       "type": "jira-project",
-      "label": "HELP-3785: AI Help + ChatGPT MCP",
-      "content": "Integrate Canva AI Help with Canva MCP in ChatGPT. Rollout status, due May 1.",
+      "label": "HELP-3785: Canva AI + ChatGPT MCP",
+      "content": "Integrate Canva AI Help with Canva MCP in ChatGPT. Status: Rollout. Due May 1.",
       "date": "2026-04-07",
-      "keywords": ["HELP-3785", "ChatGPT MCP", "AI Help", "Canva MCP"]
-    },
-    {
-      "id": "HELP-4291",
-      "type": "jira-project",
-      "label": "HELP-4291: Auto Screenshots",
-      "content": "Auto-capture raw screenshots for 'How to' steps across locales. Sahil Bahl's browser agent does automated HC page validation + screenshot capture as part of 5K content goal.",
-      "date": "2026-04-07",
-      "keywords": ["HELP-4291", "screenshots", "automation", "locales", "visual content", "Sahil Bahl"]
-    },
-    {
-      "id": "HELP-4139",
-      "type": "jira-project",
-      "label": "HELP-4139: Mobile UX Discovery",
-      "content": "Mobile Help UX Strategy and Discovery epic. Audit of mobile help experience, feeds into UVSG-1343 milestones.",
-      "date": "2026-04-07",
-      "keywords": ["HELP-4139", "mobile UX", "discovery", "audit"]
+      "keywords": ["ChatGPT", "MCP", "Canva AI Help", "plugin"]
     },
     {
       "id": "HELP-3222",
       "type": "jira-project",
-      "label": "HELP-3222: LLM Readability",
-      "content": "Improve HC articles LLM readability — restructure articles so AI models can parse and use them more accurately in Help Assistant responses. Connected to Sophie's de-duplication work: update once, flows to LLMs automatically.",
-      "date": "2026-04-07",
-      "keywords": ["HELP-3222", "LLM readability", "HC articles", "AI", "structured content"]
+      "label": "HELP-3222: LLM readability",
+      "content": "[DISC] Improve HC articles LLM readability — clean content structure and prompt-compatible taxonomy so AI can consume help content. Status: Backlog.",
+      "date": "2026-04-15",
+      "keywords": ["LLM readability", "article structure", "AI-ready content"]
     },
-
-    // ── STRATEGY THEMES (green) ───────────────────────────────────────────
-
+    {
+      "id": "HELP-4370",
+      "type": "jira-project",
+      "label": "HELP-4370: HC + Design School prototype",
+      "content": "Build prototype LLM trained on HC + Design School + marketing content to demo unified content value. Status: Backlog.",
+      "date": "2026-04-07",
+      "keywords": ["RAG", "Design School", "prototype", "unified content"]
+    },
+    {
+      "id": "HELP-4369",
+      "type": "jira-project",
+      "label": "HELP-4369: Content platform PRD",
+      "content": "Write up content platform consolidation proposal (HC + Design School + marketing). Status: Backlog.",
+      "date": "2026-04-07",
+      "keywords": ["PRD", "content platform", "Design School", "consolidation"]
+    },
     {
       "id": "theme-ai-first-help",
       "type": "strategy-theme",
       "label": "AI-First Help Center",
-      "content": "Overarching H1 theme: ship AI-driven Help Center surfaces with clear eval frameworks. Spans logged-out HA, ChatGPT MCP, split panel, and logged-in session goal. Mark C LGTM'd AI-first HC vision Aug 2025; flagged mobile as key area.",
+      "content": "Overarching H1 theme: ship AI-driven HC surfaces with measurable self-serve success. Spans logged-out HA, No Dead Ends, HC AI convergence, pre-editor design gen, and UVSG-614/615.",
       "date": null,
-      "keywords": ["AI-first", "Help Center", "UVSG-614", "logged-in", "HA"]
+      "keywords": ["AI", "help center", "HA", "logged-in", "UVSG-614", "UVSG-615"]
     },
     {
-      "id": "theme-ds-convergence",
-      "type": "strategy-theme",
-      "label": "Design School x HC Convergence",
-      "content": "Long-running thesis: HC and Design School serve different user moments but should share a unified discovery surface and eventually a unified platform. Evidence: unified search experiment (Aug 2025), DS Guides now being built, Contentful skill as bridge, Andi exploring moving Pri to education space.",
-      "date": null,
-      "keywords": ["Design School", "Help Center", "convergence", "unified", "learning"]
-    },
-    {
-      "id": "theme-content-automation",
-      "type": "strategy-theme",
-      "label": "Content Automation",
-      "content": "Shift from manual content production to automated, AI-assisted content ops. Covers Contentful MCP, auto-screenshots (Sahil's browser agent), LLM readability, and AI guide generation. 3,455 content improvements delivered so far in H1.",
-      "date": null,
-      "keywords": ["content automation", "Contentful MCP", "AI", "screenshots", "pipeline"]
-    },
-    {
-      "id": "theme-mobile",
+      "id": "theme-mobile-experience",
       "type": "strategy-theme",
       "label": "Mobile Help Experience",
-      "content": "Dedicated H1 goal to improve mobile help UX and drive +2% mobile activation. Includes audit, settings entry point, and half-sheet in-editor help. Mobile help rate 0.9% vs desktop 2% — Damien Kime pulling Snowflake data to confirm gap.",
+      "content": "Mobile help rate 0.9% vs desktop 2%. 15% of mobile help users return. Half-sheet + settings entry point + activation parity goal. UVSG-1343.",
       "date": null,
-      "keywords": ["mobile", "UVSG-1343", "activation", "half-sheet", "settings", "Damien Kime"]
+      "keywords": ["mobile", "half-sheet", "activation", "UVSG-1343"]
     },
     {
-      "id": "theme-hc-as-ssot",
+      "id": "theme-content-unification",
       "type": "strategy-theme",
-      "label": "Help Content as SSOT",
-      "content": "Emerging strategic thesis: HC content (Contentful) should be the single source of truth that feeds Design School guides, enterprise training, Omniagent KBs, and all Canva educational content — eliminating duplicated authoring across org. Already partially executed: Sophie Benjamin's MA x HC de-duplication (Feb 2026). Structural blocker: Canva CMS (DS) vs Contentful (HC) are separate systems.",
+      "label": "Content Platform Unification",
+      "content": "Transform HC content into an AI-ready unified platform: HC + Design School + marketing as modular RAG, LLM-readable articles, Canvas CMS overhaul as enabler.",
       "date": null,
-      "keywords": ["SSOT", "single source of truth", "Help Center", "Design School", "education", "enterprise", "Contentful"]
+      "keywords": ["Design School", "RAG", "LLM readability", "Contentful", "content platform"]
     },
     {
-      "id": "theme-ai-surface-unification",
+      "id": "theme-scalable-delivery",
       "type": "strategy-theme",
-      "label": "AI Surface Unification",
-      "content": "Matthew B's vision (Jan 2026, endorsed by Pri Apr 2026): kill Help Assistant as a separate named surface. Merge into a single 'Ask Canva' AI entry point with unified chat history. AIHE group restructured (Dec 2025) with Matthew B leading HAIP platformization. Andi LGTM'd direction but kept bottom-right entry point.",
+      "label": "Scalable Delivery and Process",
+      "content": "Explicit sequencing, Jira-first goal management, 2-week horizons. Mid-cycle change process born from UVSG-615 friction — flagged Kanban + weekly batch review.",
       "date": null,
-      "keywords": ["Ask Canva", "Help Assistant", "unified surface", "Matthew Baranauskas", "platformization", "HAIP"]
+      "keywords": ["sequencing", "Jira", "mid-cycle", "delivery"]
     },
-
-    // ── PEOPLE (grey) ─────────────────────────────────────────────────────
-
     {
-      "id": "person-sarah",
+      "id": "person-willian",
       "type": "person",
-      "label": "Sarah Stocks",
-      "content": "Sarah Stocks — Design School PM. Key collaborator on DS x HC integration. Believes DS and HC will eventually be on the same platform (co-stated with Pri in DM to Danne, Apr 13). Leading DS written guides initiative.",
+      "label": "Willian Arsenio de Sousa",
+      "content": "Engineer building logged-out HA. #uv-h126-platformise-help-assistant contributor.",
       "date": null,
       "keywords": []
     },
     {
-      "id": "person-kate",
+      "id": "person-nee",
       "type": "person",
-      "label": "Kate Gordes",
-      "content": "Kate Gordes — Design School, Design Education lead. Author of DS Vision deck. Contributed UX rationale for unified search. Design lead for new short-form DS content format.",
+      "label": "Nee Dasig",
+      "content": "Seeking LGTM on policy disclaimer for logged-out HA. #uv-design-lgtms contributor.",
       "date": null,
       "keywords": []
     },
     {
-      "id": "person-mikaela",
+      "id": "person-simone",
       "type": "person",
-      "label": "Mikaela Griffith",
-      "content": "Mikaela Griffith — Design School content. Testing the Contentful Claude skill on the wedding stationery guide brief. DS team point of contact for HC content integration.",
-      "date": null,
-      "keywords": []
-    },
-    {
-      "id": "person-linette",
-      "type": "person",
-      "label": "Linette Voller",
-      "content": "Linette Voller — HCF team. Raised step-gap detection idea for AI guides. Also led GEO/SEO project and discovered that DS + marketing pages cannibalise HC in AI search results — 35% of Canva help queries answered by non-HC content.",
-      "date": null,
-      "keywords": []
-    },
-    {
-      "id": "person-jenna",
-      "type": "person",
-      "label": "Jenna Murphy",
-      "content": "Jenna Murphy — HCF engineer. Led the DS x HC Search Results and Home Page experiment rollout (Aug 2025, 50% experiment). Suggested detecting conversational intent to transition users to Help Assistant.",
-      "date": null,
-      "keywords": []
-    },
-    {
-      "id": "person-madison",
-      "type": "person",
-      "label": "Madison Tucker",
-      "content": "Madison Tucker — Enterprise guidance team. Articulated the vision of a unified content surface: marketing → DS → Ask Canva → HC, segmenting by how-to vs. best practice.",
-      "date": null,
-      "keywords": []
-    },
-    {
-      "id": "person-matthew",
-      "type": "person",
-      "label": "Matthew Baranauskas",
-      "content": "Matthew Baranauskas — Group Product Design Lead, Help AI Platform (HAIP). Proposed merging Help Assistant into Ask Canva as single AI entry point (Jan 2026). Leading HAIP platformization — embedding help flows into other Canva surfaces. Pri called his UV Product Review vision 'the first time I see such a cohesive vision for help.'",
+      "label": "Simone Attanasio",
+      "content": "Mobile UX goal owner (UVSG-1343). #uv-26h1-mobile-help-ux-glowup and #uv-h126og-get-users-unstuck contributor.",
       "date": null,
       "keywords": []
     },
@@ -440,256 +355,174 @@ const RAW = {
       "id": "person-damien",
       "type": "person",
       "label": "Damien Kime",
-      "content": "Damien Kime — DS Performance Analyst. Pulling platform-split activation data from Snowflake to confirm whether desktop activates more than mobile after help usage. Mobile help rate 0.9% vs desktop 2%. Key data partner for UVSG-1343 goal name confirmation.",
+      "content": "Data lead pulling mobile vs desktop activation split from Snowflake. #uv-h126og-get-users-unstuck contributor.",
       "date": null,
       "keywords": []
     },
     {
-      "id": "person-laura",
+      "id": "person-allison-wahl",
       "type": "person",
-      "label": "Laura Derman",
-      "content": "Laura Derman — HC PM / lead for 5K content goal and HC CMS platform. Runs the content pipeline and Contentful. Asked the key question in #internal-contentful: one unified content space vs. separate domains with shared reusable blocks? H2 roadmap: HC AI mode May → platformization → Affinity/Leonardo in 2 weeks per product.",
+      "label": "Allison Wahl",
+      "content": "Help Memory M2 owner. #uv-h126-help-memory and #user-voice-product-review contributor.",
       "date": null,
       "keywords": []
     },
     {
-      "id": "person-sophie",
+      "id": "person-abbie-greenwood",
       "type": "person",
-      "label": "Sophie Benjamin",
-      "content": "Sophie Benjamin — User Voice team. Delivered the MA x HC troubleshooting content de-duplication (Feb 2026): troubleshooting steps now authored once and flow to Help Assistant, Help Center, KBs, Macros, and Omniagent automatically. First concrete SSOT implementation at the content model level.",
+      "label": "Abbie Greenwood",
+      "content": "#uv-h126-noreply-emails contributor — clarifying 3 distinct problems in no-reply email scope.",
       "date": null,
       "keywords": []
     },
     {
-      "id": "person-danne",
+      "id": "person-darren-hitchman",
       "type": "person",
-      "label": "Danne Lim",
-      "content": "Danne Lim — Group Lead, User Voice. The person Pri shared the DS+HC platform convergence vision with (DM Apr 13). Recipient of the explicit statement: 'Sarah, DS PM, and I believe that one day DS and HC will belong in the same platform.'",
+      "label": "Darren Hitchman",
+      "content": "Messaging Platform team — investigating reply-to-email + deeplinks/OmniAgent integration. #uv-h126-noreply-emails contributor.",
       "date": null,
       "keywords": []
     },
     {
-      "id": "person-andi",
+      "id": "person-sarah-stocks",
       "type": "person",
-      "label": "Andi Schuster",
-      "content": "Andi Schuster — GM/Director, User Voice. In 1:1 with Pri (Apr 9) exploring moving Pri to the education space — a management-level signal that the HC + DS org convergence is already being considered at the top. LGTM'd Matthew's unified AI surface direction but kept the bottom-right entry point. Announced AIHE group restructure + Matthew's HAIP mandate Dec 2025.",
+      "label": "Sarah Stocks",
+      "content": "Design School manager. Flagged existing HC to Design School search API endpoint (accreditation_api.proto). #martech-design-school-experience contributor.",
       "date": null,
       "keywords": []
     },
-
-    // ── SLACK IDEAS (blue) ────────────────────────────────────────────────
-
     {
-      "id": "slack-sarah-guide",
+      "id": "slack-willian-loggedout-ha",
       "type": "slack-idea",
-      "label": "DS guides integrate HC articles",
-      "content": "Sarah Stocks (Feb 2026): exploring new DS content formats including long-form written guides, and keen to integrate relevant Help Centre articles within them.",
-      "author": "Sarah Stocks",
-      "channel": "#design-school-x-help-centre",
-      "date": "2026-02-03",
-      "keywords": ["Design School guides", "HC articles", "content integration"]
+      "label": "Embedded HA + logged-out HA ready",
+      "content": "Embedded HA (logged-in) now used by B2B MarTech team at ~1% rollout. Logged-out HA demoed to HAIP team — HC articles with Magic Answers and search with summaries all working for logged-out users.",
+      "author": "Willian Arsenio de Sousa",
+      "channel": "#uv-h126-platformise-help-assistant",
+      "date": "2026-04-07",
+      "keywords": ["logged-out", "HA", "B2B", "Magic Answers", "HELP-4319"]
     },
     {
-      "id": "slack-kate-unified",
+      "id": "slack-nee-policy-disclaimer",
       "type": "slack-idea",
-      "label": "Users are task-focused, not platform-focused",
-      "content": "Kate Gordes (Jul 2025): rationale for unified search — users want answers regardless of source. Mix HC + DS content in same results with clear content-type differentiation (badges, duration, difficulty).",
-      "author": "Kate Gordes",
-      "channel": "#design-school-x-help-centre",
-      "date": "2025-07-30",
-      "keywords": ["unified search", "task-focused", "Design School", "Help Center", "content differentiation"]
-    },
-    {
-      "id": "slack-mikaela-jtbd",
-      "type": "slack-idea",
-      "label": "JTBD for Contentful MCP guides",
-      "content": "Mikaela Griffith (Feb 2026): offered 'Create an on-trend social post on the go' as a JTBD to test Contentful MCP guide generation — specifically for Canva Create content.",
-      "author": "Mikaela Griffith",
-      "channel": "#design-school-x-help-centre",
-      "date": "2026-02-05",
-      "keywords": ["JTBD", "Contentful MCP", "guide generation", "social post"]
-    },
-    {
-      "id": "slack-linette-steps",
-      "type": "slack-idea",
-      "label": "Detect missing steps in AI guides",
-      "content": "Linette Voller (Feb 2026): proposed augmenting the AI guide system to detect when it's missing appropriate steps for part of a procedure — flag gaps rather than fill in the blanks silently.",
-      "author": "Linette Voller",
-      "channel": "#design-school-x-help-centre",
-      "date": "2026-02-18",
-      "keywords": ["missing steps", "AI guide", "step detection", "Contentful"]
-    },
-    {
-      "id": "slack-jenna-rollout",
-      "type": "slack-idea",
-      "label": "DS x HC search rollout (Aug 2025)",
-      "content": "Jenna Murphy (Aug 2025): rolled out Design School integration on HC Search Results and Home Page to 50% of users — 'unified discovery experience' bridging HC support needs and DS educational content. Kudos to Pri for prototypes that enabled fast move.",
-      "author": "Jenna Murphy",
-      "channel": "#rollouts-canva",
-      "date": "2025-08-29",
-      "keywords": ["DS integration", "HC search", "rollout", "unified discovery"]
-    },
-    {
-      "id": "slack-madison-unified",
-      "type": "slack-idea",
-      "label": "Unified surface: marketing → DS → HC",
-      "content": "Madison Tucker (Jan 2025): articulated a unified content surface spanning marketing, in-product notifications, Design School, Ask Canva, and Help Center — with how-to from HC, best practice from courses.",
-      "author": "Madison Tucker",
-      "channel": "#core-group-improved-ent-guidance",
-      "date": "2025-01-23",
-      "keywords": ["unified surface", "marketing", "Design School", "Ask Canva", "Help Center", "how-to", "best practice"]
-    },
-    {
-      "id": "slack-matthew-unified-ai",
-      "type": "slack-idea",
-      "label": "Merge HA into Ask Canva — one AI surface",
-      "content": "Matthew Baranauskas (Jan 2026, #user-voice-product-review): 'Ask Canva and Help Assistant merge into one experience... unified chat history stored across all entry points.' Ask Canva icon in bottom-right FAB, in flyout when selecting objects, in editor and on home. Single conversational AI — no more surface fragmentation.",
-      "author": "Matthew Baranauskas",
-      "channel": "#user-voice-product-review",
-      "date": "2026-01-09",
-      "keywords": ["Ask Canva", "Help Assistant", "unified", "chat history", "FAB", "single entry point"]
-    },
-    {
-      "id": "slack-linette-cannibalisation",
-      "type": "slack-idea",
-      "label": "DS + marketing pages cannibalise HC in AI",
-      "content": "Linette Voller (Jan 2026, GEO/SEO project): 35% of Canva domain citations in AI search results (ChatGPT, Perplexity, Gemini) go to marketing or Design School pages — not Help Center. HC only accounts for 65%. YouTube is most cited domain overall. DS + marketing compete with HC using outdated content, creating user confusion. Pri's response: 'we have never considered it before, only the other way around.'",
-      "author": "Linette Voller",
-      "channel": "#h1-2026-uv-launch-a-chatbot-geo-seo-improvement-initiative",
-      "date": "2026-01-09",
-      "keywords": ["cannibalisation", "GEO", "SEO", "AI search", "Design School", "marketing", "Help Center", "citations"]
-    },
-    {
-      "id": "slack-sophie-dedup",
-      "type": "slack-idea",
-      "label": "MA x HC de-dup delivered: update once, flows everywhere",
-      "content": "Sophie Benjamin (Feb 2026, #user-voice-initiatives): delivered de-duplication of Help Assistant and Help Center troubleshooting content. Troubleshooting steps now authored once in Contentful and flow automatically to Help Assistant answers, HC articles, KBs, Macros, and Omniagent. First concrete SSOT delivery. ~1200 entries published by Content Ops. Also: 'Easier for LLMs to retain context when scraping our articles for Claude, ChatGPT, etc.'",
-      "author": "Sophie Benjamin",
-      "channel": "#user-voice-initiatives",
-      "date": "2026-02-05",
-      "keywords": ["de-duplication", "troubleshooting", "SSOT", "Contentful", "Help Assistant", "Help Center", "Omniagent"]
-    },
-    {
-      "id": "slack-laura-contentful",
-      "type": "slack-idea",
-      "label": "Unified content space vs. shared blocks — which model?",
-      "content": "Laura Derman (Feb 2026, #internal-contentful): 'One unified content space across all product domains, or separate domains with shared reusable content blocks managed from a single source?' Asked to Sally Bagshaw and Kunday after working through content pipeline user stories. Sally's response: gut says product-level (Canva, Affinity, CN separate spaces) — needs clarity for LLMs on whether unified space causes complexity.",
-      "author": "Laura Derman",
-      "channel": "#internal-contentful",
-      "date": "2026-02-25",
-      "keywords": ["unified content space", "Contentful", "Canva", "Affinity", "LLM", "content model", "reusable blocks"]
-    },
-    {
-      "id": "slack-andi-aihe-restructure",
-      "type": "slack-idea",
-      "label": "AIHE reorg: Matthew B leads platformization",
-      "content": "Andi Schuster (Dec 2025, #user-voice-internal-all): AIHE group renamed AI Help Experience; Matthew Baranauskas becomes Group Product Design Lead for HAIP (Help AI Platform team) — focused on 'platformizing the help ecosystem and embedding custom flows.' All-time-high 98.9% SRR. This is the org-level signal that Help becoming a platform is now official mandate.",
-      "author": "Andi Schuster",
-      "channel": "#user-voice-internal-all",
-      "date": "2025-12-16",
-      "keywords": ["AIHE", "AI Help Experience", "Matthew Baranauskas", "HAIP", "platformization", "org structure"]
-    },
-    {
-      "id": "slack-tahlia-future-hc",
-      "type": "slack-idea",
-      "label": "Future HC designs: two chat UIs problem",
-      "content": "Tahlia Giann (Apr 2026, #help-content-and-findability-internal): 'Designs I've been working through for the future of help center. This is to address the issue of having two conversational experiences next to each other — this is also the problem they're trying to fix from a Canva AI and Help integration perspective.' The UI expression of the AI surface unification thesis.",
-      "author": "Tahlia Giann",
-      "channel": "#help-content-and-findability-internal",
+      "label": "Policy disclaimer for logged-out HA",
+      "content": "Seeking LGTM on legal transparency requirement: policy disclaimer for logged-out HA users. Legal has pre-LGTM'd. Requires Matthew and Linette sign-off before launch.",
+      "author": "Nee Dasig",
+      "channel": "#uv-design-lgtms",
       "date": "2026-04-10",
-      "keywords": ["future help center", "two conversational experiences", "Canva AI", "Help Assistant", "integration"]
+      "keywords": ["logged-out", "HA", "policy", "legal", "HELP-4319"]
+    },
+    {
+      "id": "slack-simone-mobile-activation",
+      "type": "slack-idea",
+      "label": "Mobile HA engagement in activation",
+      "content": "Simone proposing to expand activation definition to include 'Engaged with Help Assistant' on mobile, not just share/publish/download. Mobile 59.7% vs desktop 66.5%. Flagging to Hai Tran for confirmation.",
+      "author": "Simone Attanasio",
+      "channel": "#uv-h126og-get-users-unstuck",
+      "date": "2026-04-17",
+      "keywords": ["mobile activation", "help assistant", "UVSG-1343", "59.7%"]
+    },
+    {
+      "id": "slack-damien-mobile-data",
+      "type": "slack-idea",
+      "label": "Platform-split activation confirmed",
+      "content": "Mobile 59.7% vs desktop 66.5% help activation rates confirmed via Snowflake. Platform-split reporting now available in the new mobile goal. Activation includes users engaging with HA (share/publish/download/present within 24hrs).",
+      "author": "Damien Kime",
+      "channel": "#uv-h126og-get-users-unstuck",
+      "date": "2026-04-17",
+      "keywords": ["mobile activation", "59.7%", "66.5%", "UVSG-1343", "platform split"]
+    },
+    {
+      "id": "slack-allison-memory-m2",
+      "type": "slack-idea",
+      "label": "Help Memory M2 split: M2.1 + M2.2",
+      "content": "M2 split: M2.1 delivers value sooner (builds on MVP foundations, reconnects users to open chats); M2.2 handles full cross-channel duplicate ticket/session leakage holistically. May 30 deadline at risk due to unexpected live chat history work.",
+      "author": "Allison Wahl",
+      "channel": "#uv-h126-help-memory",
+      "date": "2026-04-10",
+      "keywords": ["Help Memory", "M2", "duplicate tickets", "session", "UVSG-615"]
+    },
+    {
+      "id": "slack-abbie-noreply-three-problems",
+      "type": "slack-idea",
+      "label": "3 distinct no-reply email problems",
+      "content": "Abbie clarifying scope: (1) users replying with help requests — targeted CTAs; (2) users replying to comment/design share emails — reply-from-email support; (3) auto-response suppression. Three separate solutions, not one.",
+      "author": "Abbie Greenwood",
+      "channel": "#uv-h126-noreply-emails",
+      "date": "2026-04-17",
+      "keywords": ["no-reply email", "HELP-4340", "CTA", "scope"]
+    },
+    {
+      "id": "slack-darren-messaging-platform",
+      "type": "slack-idea",
+      "label": "Messaging Platform: email + deeplinks",
+      "content": "Messaging Platform team investigating options to allow users to reply to email and have that action hook into deeplinks/OmniAgent. Setting up initial discovery. Direct dependency for HELP-4340.",
+      "author": "Darren Hitchman",
+      "channel": "#uv-h126-noreply-emails",
+      "date": "2026-04-10",
+      "keywords": ["no-reply email", "HELP-4340", "deeplink", "OmniAgent", "Messaging Platform"]
+    },
+    {
+      "id": "slack-sarah-ds-api",
+      "type": "slack-idea",
+      "label": "HC already uses Design School API",
+      "content": "Help Center already uses Design School's search endpoint (accreditation_api.proto) to show DS content in HC carousel. For logged-in users, content filters dynamically by plan type. This API is the existing integration hook for the unified KB POC.",
+      "author": "Sarah Stocks",
+      "channel": "#martech-design-school-experience",
+      "date": "2026-04-10",
+      "keywords": ["Design School", "HC", "API", "accreditation_api", "unified KB", "HELP-4370"]
     }
-
   ],
   "edges": [
-
-    // Pri ideas → Jira (direct mapping)
-    { "source": "pri-uvsg614-rescope", "target": "UVSG-614", "reason": "UVSG-614 IS the rescoped goal", "strength": "strong" },
-    { "source": "pri-uvsg614-rescope", "target": "HELP-4319", "reason": "Logged-out HA is the rescoped milestone 1", "strength": "strong" },
-    { "source": "pri-uvsg614-rescope", "target": "HELP-4340", "reason": "No-reply email deep link is the rescoped milestone 2", "strength": "strong" },
-    { "source": "pri-mobile-milestones", "target": "UVSG-1343", "reason": "Three milestones confirmed in Kunday 1:1 for UVSG-1343", "strength": "strong" },
-    { "source": "pri-mobile-milestones", "target": "HELP-4139", "reason": "HELP-4139 is the Mobile Help UX discovery epic feeding these milestones", "strength": "strong" },
-    { "source": "pri-half-sheet", "target": "UVSG-1343", "reason": "Half-sheet is milestone 2 of UVSG-1343", "strength": "strong" },
-    { "source": "pri-half-sheet", "target": "pri-mobile-milestones", "reason": "Half-sheet is one of the three confirmed mobile milestones", "strength": "strong" },
-    { "source": "pri-content-consolidation", "target": "HELP-4369", "reason": "HELP-4369 IS the consolidation proposal Jira task (created post-Andi 1:1)", "strength": "strong" },
-    { "source": "pri-content-consolidation", "target": "HELP-4370", "reason": "HELP-4370 IS the LLM prototype task for unified content", "strength": "strong" },
-    { "source": "pri-content-consolidation", "target": "HELP-4371", "reason": "HELP-4371 IS the Chelsea Nordstrom outreach task for this initiative", "strength": "strong" },
-    { "source": "pri-content-consolidation", "target": "HELP-4279", "reason": "Both: building shared content graph across Canva content surfaces", "strength": "strong" },
-    { "source": "pri-llm-ds-plus-hc", "target": "HELP-4370", "reason": "HELP-4370 IS the LLM prototype that reads from DS + HC", "strength": "strong" },
-    { "source": "pri-help-as-ssot", "target": "HELP-4369", "reason": "Consolidation proposal is the formal document for the SSOT thesis", "strength": "strong" },
-    { "source": "pri-help-as-ssot", "target": "HELP-4279", "reason": "Content knowledge graph is the infrastructure for SSOT", "strength": "strong" },
-    { "source": "pri-ds-hc-same-platform", "target": "HELP-4369", "reason": "Consolidation proposal is the deliverable Pri is writing to formalise this vision", "strength": "strong" },
-    { "source": "pri-hc-platformization", "target": "UVSG-614", "reason": "UVSG-614 (logged-in AI HC) is the milestone before platformization", "strength": "strong" },
-    { "source": "pri-contentful-skill-for-ds", "target": "HELP-4370", "reason": "The skill is the practical bridge while HELP-4370 builds the full LLM prototype", "strength": "strong" },
-
-    // Jira parent-child relationships
-    { "source": "HELP-4319", "target": "UVSG-614", "reason": "HELP-4319 is a milestone under UVSG-614", "strength": "strong" },
-    { "source": "HELP-4340", "target": "UVSG-614", "reason": "HELP-4340 is a milestone under UVSG-614", "strength": "strong" },
-    { "source": "HELP-4139", "target": "UVSG-1343", "reason": "HELP-4139 (discovery epic) feeds UVSG-1343 (UV goal)", "strength": "strong" },
-
-    // Pri ideas → Slack ideas (specific shared concept)
-    { "source": "pri-unified-search", "target": "slack-kate-unified", "reason": "Same specific concept: mix HC+DS in results, task-focused not platform-focused", "strength": "strong" },
-    { "source": "pri-unified-search", "target": "slack-jenna-rollout", "reason": "Jenna's Aug 2025 rollout executed this exact experiment", "strength": "strong" },
-    { "source": "pri-contentful-mcp", "target": "slack-mikaela-jtbd", "reason": "Same: Contentful MCP + JTBD framing for guide generation", "strength": "strong" },
-    { "source": "pri-ai-guide-gen", "target": "slack-linette-steps", "reason": "Same feature: AI guide generation with step gap detection", "strength": "strong" },
-    { "source": "pri-content-consolidation", "target": "slack-madison-unified", "reason": "Same vision: unified surface spanning HC + DS + marketing with task-type routing", "strength": "strong" },
-    { "source": "pri-content-consolidation", "target": "slack-sarah-guide", "reason": "Both: integrating HC articles into Design School guide content", "strength": "strong" },
-    { "source": "pri-unified-ai-surface", "target": "slack-matthew-unified-ai", "reason": "Pri's endorsement IS Matthew's vision — same unified AI surface proposal", "strength": "strong" },
-    { "source": "pri-llm-ds-plus-hc", "target": "pri-ai-guide-gen", "reason": "Same underlying mechanism: AI reading DS + HC to generate answers", "strength": "strong" },
-    { "source": "pri-help-as-ssot", "target": "pri-ds-hc-same-platform", "reason": "Same thesis: SSOT and same platform are the same long-term destination", "strength": "strong" },
-    { "source": "pri-contentful-skill-for-ds", "target": "pri-contentful-mcp", "reason": "The Claude skill for DS IS an application of Contentful MCP", "strength": "strong" },
-
-    // Contentful MCP ↔ AI guide gen (same initiative, two angles)
-    { "source": "pri-contentful-mcp", "target": "pri-ai-guide-gen", "reason": "Contentful MCP is the delivery mechanism for AI guide generation", "strength": "strong" },
-    { "source": "pri-contentful-mcp", "target": "pri-content-boundaries", "reason": "Content boundaries define what goes into the Contentful MCP guide vs. DS", "strength": "strong" },
-
-    // Strategy themes → nodes
-    { "source": "theme-ai-first-help", "target": "UVSG-614", "reason": "UVSG-614 is the primary AI-first HC goal", "strength": "strong" },
-    { "source": "theme-ai-first-help", "target": "HELP-4319", "reason": "Logged-out HA is an AI-first surface milestone", "strength": "strong" },
-    { "source": "theme-ai-first-help", "target": "HELP-3785", "reason": "ChatGPT MCP integration is an AI-first HC expansion", "strength": "strong" },
-    { "source": "theme-ds-convergence", "target": "pri-content-consolidation", "reason": "Content consolidation IS the DS x HC convergence initiative", "strength": "strong" },
-    { "source": "theme-ds-convergence", "target": "pri-unified-search", "reason": "Unified search is the user-facing expression of DS x HC convergence", "strength": "strong" },
-    { "source": "theme-ds-convergence", "target": "HELP-4369", "reason": "Consolidation proposal is the formal deliverable for this theme", "strength": "strong" },
-    { "source": "theme-ds-convergence", "target": "HELP-4370", "reason": "LLM prototype demonstrates the value of converged content", "strength": "strong" },
-    { "source": "theme-ds-convergence", "target": "slack-linette-cannibalisation", "reason": "Cannibalisation finding reveals the exact ownership/duplication problem DS convergence must solve", "strength": "strong" },
-    { "source": "theme-content-automation", "target": "pri-contentful-mcp", "reason": "Contentful MCP is the core automation tool in this theme", "strength": "strong" },
-    { "source": "theme-content-automation", "target": "HELP-4291", "reason": "HELP-4291 (auto-screenshots) is a content automation deliverable", "strength": "strong" },
-    { "source": "theme-content-automation", "target": "HELP-3222", "reason": "LLM readability improvement is foundational to content automation", "strength": "strong" },
-    { "source": "theme-content-automation", "target": "pri-ai-guide-gen", "reason": "AI guide generation is the flagship content automation capability", "strength": "strong" },
-    { "source": "theme-mobile", "target": "UVSG-1343", "reason": "UVSG-1343 is the mobile help UV goal", "strength": "strong" },
-    { "source": "theme-mobile", "target": "HELP-4139", "reason": "HELP-4139 is the mobile UX discovery epic", "strength": "strong" },
-    { "source": "theme-mobile", "target": "pri-half-sheet", "reason": "Half-sheet is the flagship mobile interaction model", "strength": "strong" },
-    { "source": "theme-hc-as-ssot", "target": "pri-help-as-ssot", "reason": "pri-help-as-ssot is the primary articulation of this theme", "strength": "strong" },
-    { "source": "theme-hc-as-ssot", "target": "pri-llm-ds-plus-hc", "reason": "The LLM prototype is the technical implementation of HC-as-SSOT", "strength": "strong" },
-    { "source": "theme-hc-as-ssot", "target": "slack-sophie-dedup", "reason": "Sophie's de-duplication is the first concrete SSOT delivery at content model level", "strength": "strong" },
-    { "source": "theme-hc-as-ssot", "target": "slack-laura-contentful", "reason": "Laura's question IS the SSOT architecture debate", "strength": "strong" },
-    { "source": "theme-ai-surface-unification", "target": "slack-matthew-unified-ai", "reason": "Matthew's proposal is the origin of this theme", "strength": "strong" },
-    { "source": "theme-ai-surface-unification", "target": "pri-unified-ai-surface", "reason": "Pri's endorsement makes this a shared commitment", "strength": "strong" },
-    { "source": "theme-ai-surface-unification", "target": "pri-hc-platformization", "reason": "Platformization is the technical foundation enabling unified surface", "strength": "strong" },
-    { "source": "theme-ai-surface-unification", "target": "slack-andi-aihe-restructure", "reason": "AIHE restructure gave Matthew the mandate to execute this", "strength": "strong" },
-    { "source": "theme-ai-surface-unification", "target": "slack-tahlia-future-hc", "reason": "Tahlia's future HC designs are directly addressing the dual-chat-UI problem", "strength": "strong" },
-
-    // People → their Slack ideas
-    { "source": "person-sarah", "target": "slack-sarah-guide", "reason": "Sarah authored this message", "strength": "strong" },
-    { "source": "person-kate", "target": "slack-kate-unified", "reason": "Kate authored this message", "strength": "strong" },
-    { "source": "person-mikaela", "target": "slack-mikaela-jtbd", "reason": "Mikaela authored this message", "strength": "strong" },
-    { "source": "person-linette", "target": "slack-linette-steps", "reason": "Linette authored this message", "strength": "strong" },
-    { "source": "person-linette", "target": "slack-linette-cannibalisation", "reason": "Linette authored this GEO/SEO finding", "strength": "strong" },
-    { "source": "person-jenna", "target": "slack-jenna-rollout", "reason": "Jenna authored this message", "strength": "strong" },
-    { "source": "person-madison", "target": "slack-madison-unified", "reason": "Madison authored this message", "strength": "strong" },
-    { "source": "person-matthew", "target": "slack-matthew-unified-ai", "reason": "Matthew authored this proposal", "strength": "strong" },
-    { "source": "person-matthew", "target": "slack-andi-aihe-restructure", "reason": "Matthew is the subject — became HAIP lead in this restructure", "strength": "strong" },
-    { "source": "person-matthew", "target": "pri-unified-ai-surface", "reason": "Matthew's vision led Pri to endorse unified AI surface direction", "strength": "strong" },
-    { "source": "person-sophie", "target": "slack-sophie-dedup", "reason": "Sophie delivered and announced this", "strength": "strong" },
-    { "source": "person-laura", "target": "slack-laura-contentful", "reason": "Laura asked this question in #internal-contentful", "strength": "strong" },
-    { "source": "person-laura", "target": "pri-llm-ds-plus-hc", "reason": "Pri stated the LLM idea explicitly to Laura in their Apr 10 sync", "strength": "strong" },
-    { "source": "person-andi", "target": "slack-andi-aihe-restructure", "reason": "Andi authored this org announcement", "strength": "strong" },
-    { "source": "person-andi", "target": "pri-help-as-ssot", "reason": "Andi exploring moving Pri to education space — the management signal behind the SSOT direction", "strength": "strong" },
-    { "source": "person-danne", "target": "pri-ds-hc-same-platform", "reason": "Danne is the Group Lead Pri shared this vision with in a DM", "strength": "strong" },
-    { "source": "person-sarah", "target": "pri-ds-hc-same-platform", "reason": "Sarah is the DS PM co-stated as sharing this belief in Pri's DM to Danne", "strength": "strong" },
-    { "source": "person-mikaela", "target": "pri-contentful-skill-for-ds", "reason": "Mikaela is testing the Claude skill on the wedding stationery brief", "strength": "strong" },
-    { "source": "person-damien", "target": "UVSG-1343", "reason": "Damien pulling Snowflake data to confirm goal name and activation metric for UVSG-1343", "strength": "strong" }
-
+    { "source": "HELP-4319", "target": "logged-out-ha-launch", "reason": "HELP-4319 is the Jira ticket for logged-out HA launch", "strength": "strong" },
+    { "source": "UVSG-614", "target": "logged-out-ha-launch", "reason": "Logged-out HA is a milestone under UVSG-614", "strength": "strong" },
+    { "source": "UVSG-614", "target": "no-reply-email-deep-links", "reason": "No-reply email deep link is a P1 milestone under UVSG-614", "strength": "strong" },
+    { "source": "HELP-4340", "target": "no-reply-email-deep-links", "reason": "HELP-4340 is the Jira ticket for no-reply email help access", "strength": "strong" },
+    { "source": "UVSG-615", "target": "no-dead-ends-ha-canvaai", "reason": "No Dead Ends is an explicit milestone under UVSG-615", "strength": "strong" },
+    { "source": "UVSG-615", "target": "hc-ai-convergence", "reason": "HC AI mode convergence session is specifically about UVSG-615 design directions", "strength": "strong" },
+    { "source": "UVSG-615", "target": "help-memory-m2", "reason": "Help Memory M2 is a milestone under UVSG-615", "strength": "strong" },
+    { "source": "UVSG-615", "target": "jira-first-goal-process", "reason": "UVSG-615 goal change request friction directly triggered this process redesign", "strength": "strong" },
+    { "source": "UVSG-615", "target": "pre-editor-design-gen", "reason": "Pre-editor design gen is an HC AI mode concept explored under UVSG-615 scope", "strength": "strong" },
+    { "source": "UVSG-1343", "target": "half-sheet-mobile-pattern", "reason": "Half-sheet is milestone 1 of UVSG-1343 (confirmed in Kunday 1:1)", "strength": "strong" },
+    { "source": "UVSG-1343", "target": "mobile-activation-parity", "reason": "Mobile activation parity is the primary metric for UVSG-1343", "strength": "strong" },
+    { "source": "UVSG-1345", "target": "no-dead-ends-ha-canvaai", "reason": "UVSG-1345 (Matthew B's goal) and No Dead Ends share the same HA + Canva AI unification intent", "strength": "strong" },
+    { "source": "HELP-4370", "target": "unified-kb-design-school", "reason": "HELP-4370 is the prototype build task for the unified HC + Design School KB", "strength": "strong" },
+    { "source": "HELP-4369", "target": "unified-kb-design-school", "reason": "HELP-4369 is the PRD write-up for the content platform consolidation", "strength": "strong" },
+    { "source": "HELP-4370", "target": "design-school-integration", "reason": "HELP-4370 prototype is the concrete implementation of the Design School integration strategy", "strength": "strong" },
+    { "source": "person-willian", "target": "slack-willian-loggedout-ha", "reason": "Willian authored this update", "strength": "strong" },
+    { "source": "person-nee", "target": "slack-nee-policy-disclaimer", "reason": "Nee authored this LGTM request", "strength": "strong" },
+    { "source": "person-simone", "target": "slack-simone-mobile-activation", "reason": "Simone authored this message", "strength": "strong" },
+    { "source": "person-damien", "target": "slack-damien-mobile-data", "reason": "Damien authored this data update", "strength": "strong" },
+    { "source": "person-allison-wahl", "target": "slack-allison-memory-m2", "reason": "Allison authored this M2 kickoff summary", "strength": "strong" },
+    { "source": "person-abbie-greenwood", "target": "slack-abbie-noreply-three-problems", "reason": "Abbie authored this scope clarification", "strength": "strong" },
+    { "source": "person-darren-hitchman", "target": "slack-darren-messaging-platform", "reason": "Darren authored this Messaging Platform update", "strength": "strong" },
+    { "source": "person-sarah-stocks", "target": "slack-sarah-ds-api", "reason": "Sarah authored this Design School API insight", "strength": "strong" },
+    { "source": "slack-willian-loggedout-ha", "target": "logged-out-ha-launch", "reason": "Willian is building logged-out HA — same HELP-4319 initiative", "strength": "strong" },
+    { "source": "slack-nee-policy-disclaimer", "target": "logged-out-ha-launch", "reason": "Policy disclaimer is a prerequisite for logged-out HA launch (HELP-4319)", "strength": "strong" },
+    { "source": "slack-simone-mobile-activation", "target": "mobile-activation-parity", "reason": "Simone's message is about expanding the activation metric for UVSG-1343 — same goal", "strength": "strong" },
+    { "source": "slack-simone-mobile-activation", "target": "half-sheet-mobile-pattern", "reason": "Simone's metric expansion (HA engagement on mobile) validates the half-sheet initiative under UVSG-1343", "strength": "strong" },
+    { "source": "slack-damien-mobile-data", "target": "mobile-activation-parity", "reason": "Damien's Snowflake data (59.7% vs 66.5%) is the exact evidence base for UVSG-1343 goal metric", "strength": "strong" },
+    { "source": "slack-allison-memory-m2", "target": "help-memory-m2", "reason": "Allison's M2 kickoff summary describes the same Help Memory M2 scope discussed in product review", "strength": "strong" },
+    { "source": "slack-abbie-noreply-three-problems", "target": "no-reply-email-deep-links", "reason": "Abbie's scope clarification is directly about HELP-4340 — defining what the no-reply email work covers", "strength": "strong" },
+    { "source": "slack-darren-messaging-platform", "target": "no-reply-email-deep-links", "reason": "Messaging Platform deeplink/OmniAgent work is a direct dependency for HELP-4340", "strength": "strong" },
+    { "source": "slack-sarah-ds-api", "target": "unified-kb-design-school", "reason": "Sarah's API (accreditation_api.proto) is the existing integration hook for the unified KB POC", "strength": "strong" },
+    { "source": "theme-ai-first-help", "target": "UVSG-614", "reason": "UVSG-614 is Pri's primary H1 AI-first help goal", "strength": "strong" },
+    { "source": "theme-ai-first-help", "target": "UVSG-615", "reason": "UVSG-615 is the integrated AI HC + Assistant goal", "strength": "strong" },
+    { "source": "theme-ai-first-help", "target": "UVSG-1345", "reason": "UVSG-1345 unifying HA + Canva AI is the north-star AI-first vision", "strength": "strong" },
+    { "source": "theme-ai-first-help", "target": "logged-out-ha-launch", "reason": "Logged-out HA extends AI help to 20%+ HC users — core to AI-first strategy", "strength": "strong" },
+    { "source": "theme-ai-first-help", "target": "no-dead-ends-ha-canvaai", "reason": "No Dead Ends is the AI surface integration milestone", "strength": "strong" },
+    { "source": "theme-ai-first-help", "target": "hc-ai-convergence", "reason": "HC AI mode convergence is about the AI-first help center design direction", "strength": "strong" },
+    { "source": "theme-ai-first-help", "target": "pre-editor-design-gen", "reason": "Pre-editor design gen is an AI-first help surface concept", "strength": "strong" },
+    { "source": "theme-mobile-experience", "target": "UVSG-1343", "reason": "UVSG-1343 is the mobile help experience goal", "strength": "strong" },
+    { "source": "theme-mobile-experience", "target": "half-sheet-mobile-pattern", "reason": "Half-sheet is the primary design pattern for mobile help", "strength": "strong" },
+    { "source": "theme-mobile-experience", "target": "mobile-activation-parity", "reason": "Desktop activation parity is the north-star metric for the mobile help theme", "strength": "strong" },
+    { "source": "theme-content-unification", "target": "unified-kb-design-school", "reason": "Unified KB is the concrete POC for content platform unification", "strength": "strong" },
+    { "source": "theme-content-unification", "target": "design-school-integration", "reason": "Design School integration is Pri's strategic bet for content unification", "strength": "strong" },
+    { "source": "theme-content-unification", "target": "HELP-3222", "reason": "LLM readability is a prerequisite for AI-ready content in the unified platform", "strength": "strong" },
+    { "source": "theme-content-unification", "target": "HELP-4370", "reason": "HELP-4370 is the prototype build for unified content", "strength": "strong" },
+    { "source": "theme-content-unification", "target": "canvas-cms-overhaul", "reason": "Canvas CMS overhaul (MarTech H2 goal) is a major enabler for the unified content platform", "strength": "strong" },
+    { "source": "theme-scalable-delivery", "target": "jira-first-goal-process", "reason": "Jira-first process is the concrete delivery system improvement Pri is driving", "strength": "strong" },
+    { "source": "theme-scalable-delivery", "target": "UVSG-614", "reason": "UVSG-614 rescope demonstrated explicit sequencing and deprioritisation in practice", "strength": "strong" },
+    { "source": "theme-scalable-delivery", "target": "UVSG-615", "reason": "UVSG-615 date extension + change request process is a case study in scalable delivery", "strength": "strong" }
   ]
 };
 
@@ -842,26 +675,16 @@ function selectNode(d, edges) {
     <div class="detail-content">${d.content || ''}</div>
     <div class="detail-meta">${d.date ? '📅 ' + d.date : ''} ${d.author ? '· 👤 ' + d.author : ''} ${d.channel ? '· ' + d.channel : ''} ${d.source ? '· 📄 ' + d.source : ''}</div>
     ${d.url ? '<div class="detail-meta" style="margin-top:4px"><a href="' + d.url + '" style="color:#3498DB;font-size:11px">Open in Slack ↗</a></div>' : ''}
-    ${connNodes.length ? `
-      <div class="detail-connections">
-        <h4>${connNodes.length} connection${connNodes.length > 1 ? 's' : ''}</h4>
-        ${connNodes.map(({node, edge}) => `
-          <div class="connection-item" onclick="highlightNode('${node.id}')">
-            <div class="conn-label" style="color:${COLOR[node.type]}">${node.label}</div>
-            ${edge ? '<div class="conn-reason">' + edge.reason + '</div>' : ''}
-          </div>
-        `).join('')}
-      </div>
-    ` : ''}
+    ${connNodes.length ? '<div class="detail-connections"><h4>' + connNodes.length + ' connection' + (connNodes.length > 1 ? 's' : '') + '</h4>' + connNodes.map(function(x) { var node = x.node; var edge = x.edge; return '<div class="connection-item" onclick="highlightNode(\'' + node.id + '\')"><div class="conn-label" style="color:' + (COLOR[node.type] || '#888') + '">' + node.label + '</div>' + (edge ? '<div class="conn-reason">' + edge.reason + '</div>' : '') + '</div>'; }).join('') + '</div>' : ''}
   `;
 }
 
-window.highlightNode = (id) => {
-  const node = RAW.nodes.find(n => n.id === id);
+window.highlightNode = function(id) {
+  var node = RAW.nodes.find(function(n) { return n.id === id; });
   if (node) {
-    const visibleNodes = simulation.nodes();
-    const visibleEdges = simulation.force('link').links();
-    const found = visibleNodes.find(n => n.id === id);
+    var visibleNodes = simulation.nodes();
+    var visibleEdges = simulation.force('link').links();
+    var found = visibleNodes.find(function(n) { return n.id === id; });
     if (found) selectNode(found, visibleEdges);
   }
 };
@@ -869,7 +692,7 @@ window.highlightNode = (id) => {
 const tooltip = document.getElementById('tooltip');
 function showTooltip(e, d) {
   tooltip.style.display = 'block';
-  tooltip.innerHTML = '<strong style="color:' + COLOR[d.type] + '">' + d.label + '</strong><br>' + (d.content ? d.content.slice(0, 80) + (d.content.length > 80 ? '…' : '') : '');
+  tooltip.innerHTML = '<strong style="color:' + (COLOR[d.type] || '#888') + '">' + d.label + '</strong><br>' + (d.content ? d.content.slice(0, 80) + (d.content.length > 80 ? '…' : '') : '');
 }
 function moveTooltip(e) {
   const rect = container.getBoundingClientRect();
@@ -878,8 +701,8 @@ function moveTooltip(e) {
 }
 function hideTooltip() { tooltip.style.display = 'none'; }
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
+document.querySelectorAll('.filter-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
     const t = btn.dataset.type;
     if (activeFilters.has(t)) { activeFilters.delete(t); btn.classList.remove('active'); }
     else { activeFilters.add(t); btn.classList.add('active'); }
@@ -887,21 +710,21 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-document.getElementById('search-input').addEventListener('input', e => {
+document.getElementById('search-input').addEventListener('input', function(e) {
   const q = e.target.value.toLowerCase().trim();
   if (!q) { nodeSel.classed('dimmed', false); linkSel.classed('dimmed', false); return; }
-  const matchIds = new Set(RAW.nodes.filter(n =>
-    n.label.toLowerCase().includes(q) || (n.content || '').toLowerCase().includes(q)
-  ).map(n => n.id));
-  nodeSel.classed('dimmed', n => !matchIds.has(n.id));
-  linkSel.classed('dimmed', e => {
+  const matchIds = new Set(RAW.nodes.filter(function(n) {
+    return n.label.toLowerCase().includes(q) || (n.content || '').toLowerCase().includes(q);
+  }).map(function(n) { return n.id; }));
+  nodeSel.classed('dimmed', function(n) { return !matchIds.has(n.id); });
+  linkSel.classed('dimmed', function(e) {
     const s = typeof e.source === 'object' ? e.source.id : e.source;
     const t = typeof e.target === 'object' ? e.target.id : e.target;
     return !matchIds.has(s) && !matchIds.has(t);
   });
 });
 
-svg.on('click', (e) => {
+svg.on('click', function(e) {
   if (e.target.tagName === 'svg' || e.target.tagName === 'g') {
     nodeSel.classed('dimmed', false);
     linkSel.classed('dimmed', false).classed('highlighted', false);
@@ -910,7 +733,7 @@ svg.on('click', (e) => {
   }
 });
 
-window.addEventListener('resize', () => {
+window.addEventListener('resize', function() {
   W = container.clientWidth; H = container.clientHeight;
   simulation.force('center', d3.forceCenter(W / 2, H / 2)).alpha(0.3).restart();
 });

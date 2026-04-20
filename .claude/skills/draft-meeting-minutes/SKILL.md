@@ -22,7 +22,7 @@ From the request, extract:
 
 Then check for source material in priority order:
 
-**1. Zoom transcript** — call `mcp__zoom-notes__list_notes` with `limit: 5` and `from` set to 3 days ago. Find the matching meeting. If found, call `mcp__zoom-notes__fetch_transcript`.
+**1. Zoom transcript** — call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_meetings` with `from` set to 3 days ago in ISO 8601 UTC, `to` set to now, and `page_size: 5`. If the meeting name is known, pass it as `q` to narrow results. Find the matching meeting by `topic`. If found, call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_meeting_assets` with the `meeting_uuid`, then call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_recording_resource` with `meetingId` set to the `meeting_uuid` and `types: "transcript,summary"`.
 
 **2. Existing meeting note** — scan `Context/Meeting Notes/` for a file matching the meeting name or date.
 

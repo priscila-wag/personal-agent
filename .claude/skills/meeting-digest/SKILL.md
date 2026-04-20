@@ -17,21 +17,23 @@ Run all steps in sequence. Do not ask for confirmation between steps unless expl
 
 ### Step 1 — Fetch the most recent Zoom meeting
 
-1. Call `mcp__zoom-notes__list_notes` with `limit: 10` and `from` set to 5 days ago (YYYY-MM-DD format).
-2. **Auth failure handling** — if the call returns an authentication error (401, "Authentication expired", or similar):
-   - The MCP server will automatically try to refresh the token via the browser. If that also fails (SSO cookies expired), immediately call `mcp__0deb4b0b-cc05-4ae4-8e5e-08d6c09985dd__slack_send_message` with:
+1. Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_meetings` with `from` set to 5 days ago in ISO 8601 UTC (e.g. `2026-04-15T00:00:00Z`), `to` set to now, and `page_size: 10`. Pri's timezone is `Australia/Sydney` (AEST UTC+10 / AEDT UTC+11) — convert accordingly when computing the date range.
+2. **Error handling** — if the call fails or returns an error:
+   - Post a Slack alert: call `mcp__0deb4b0b-cc05-4ae4-8e5e-08d6c09985dd__slack_send_message` with:
      - `channel_id`: `C0AM6E2D4R2`
-     - `message`: `⚠️ *Meeting digest blocked — Zoom login required*\n\nThe Zoom SSO session has expired. Open <https://canva.zoom.us/notes#/my_notes|zoom.us/notes> in your browser and complete SSO login, then the next scheduled run will work automatically.\n\n_No action needed if you don't have any new meetings to digest._`
+     - `message`: `⚠️ *Meeting digest blocked — Zoom error*\n\n[error message]. Check the Zoom for Claude connector in Claude settings.`
    - Then stop.
-3. Identify the **most recent** note by date. If there are multiple meetings on the same day, pick the one that started latest.
+3. Identify the **most recent** meeting by `schedule_start_time`. If there are multiple on the same day, pick the one with the latest start time.
 4. **Idempotency check** — before fetching the transcript:
    - First, run `git -C /Users/priscila/Documents/Agents/personal-agent-main pull --ff-only` to ensure the working directory reflects any notes written by previous scheduled runs.
-   - Derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` (same format as Step 5).
+   - Derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` using the meeting's `topic` field (same format as Step 5).
    - Check if a file with that name already exists in `Context/Meeting Notes/` using the Bash tool: `ls "/Users/priscila/Documents/Agents/personal-agent-main/Context/Meeting Notes/" | grep "[filename]"`.
    - If it exists, stop immediately and output: *"Notes already exist for [meeting name] ([date]) — skipping to avoid duplicates."* Do not fetch the transcript.
    - Also check git log: `git -C /Users/priscila/Documents/Agents/personal-agent-main log --oneline -10 | grep "[Meeting Name]"` as a secondary check in case the file was written but not visible.
-5. Call `mcp__zoom-notes__fetch_transcript` with the exact note name returned.
-6. If no transcript content is available (meeting too recent, recording not yet processed), tell the user: *"Transcript not ready yet — Zoom usually takes 5–10 min after the meeting ends. Run `/meeting-digest` again shortly."* Then stop.
+5. Using the `meeting_uuid` from the search result:
+   - **a.** Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_meeting_assets` with `meetingId` set to the `meeting_uuid`. This returns the Zoom AI summary, my notes, recording status, and participant list.
+   - **b.** If a recording exists and `processing` is not `true`, call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_recording_resource` with `meetingId` set to the `meeting_uuid` and `types: "transcript,summary,nextStep"`. This returns the full transcript, Zoom's AI-generated summary, and auto-extracted next steps.
+6. If no transcript content is available (`recording` is `null`, `processing: true`, or `get_recording_resource` returns no transcripts), tell the user: *"Transcript not ready yet — Zoom usually takes 5–10 min after the meeting ends. Run `/meeting-digest` again shortly."* Then stop.
 
 ---
 
@@ -45,6 +47,8 @@ Before processing the transcript, read:
 ---
 
 ### Step 3 — Analyse the transcript
+
+**Additional signal:** If `get_recording_resource` returned `summaries` or `next_steps` arrays (Zoom's AI-generated content), use them as supplementary cross-checks — but do not copy them verbatim. Your job is to extract meaning through Pri's lens, not relay Zoom's output.
 
 Extract four things from the transcript:
 

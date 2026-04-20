@@ -31,7 +31,7 @@ Start from concrete state and signals, then layer in goals and learnings at the 
    - For each issue note: key, summary, priority, due date, any blockers in comments
    - Use these three lists as concrete inputs to Step 2's analysis — they are the ground truth for what's in flight vs what must land this week
    - If Jira MCP is not available, skip silently
-6. **Zoom** (via Zoom MCP, if available) — pull transcripts from last week's meetings using `download_transcripts`:
+6. **Zoom** (via Zoom MCP, if available) — search last week's meetings: call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_meetings` with `from`/`to` set to last week's Monday–Friday date range in ISO 8601 UTC (Pri's timezone: `Australia/Sydney`, AEST UTC+10 / AEDT UTC+11). For each meeting found, call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_recording_resource` with `meetingId` (the `meeting_uuid`) and `types: "summary,nextStep"`:
    - Extract: unresolved action items, decisions that affect this week's priorities, open questions
    - If Zoom MCP is not available, check `Context/Meeting Notes/` for last week's notes
 7. If connected tools are available (Slack, email), check for weekend/Friday context: decisions, escalations, urgent threads

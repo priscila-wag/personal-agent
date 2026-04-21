@@ -15,25 +15,38 @@ Run all steps in sequence. Do not ask for confirmation between steps unless expl
 
 ---
 
-### Step 1 — Fetch the most recent Zoom meeting
+### Step 1 — Fetch all undigested meetings from today
 
-1. Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_meetings` with `from` set to 5 days ago in ISO 8601 UTC (e.g. `2026-04-15T00:00:00Z`), `to` set to now, and `page_size: 10`. Pri's timezone is `Australia/Sydney` (AEST UTC+10 / AEDT UTC+11) — convert accordingly when computing the date range.
+**This step processes ALL undigested work meetings from today — not just the most recent one.**
+
+1. Compute "today" as the current date in `Australia/Sydney` (AEST = UTC+10, AEDT = UTC+11). Set:
+   - `from` = start of today AEST converted to UTC (e.g. if today is 2026-04-21 AEST, use `2026-04-20T14:00:00Z`)
+   - `to` = now in UTC (always use the current moment — never a fixed earlier time)
+   Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_meetings` with this range and `page_size: 20`.
+
 2. **Error handling** — if the call fails or returns an error:
    - Post a Slack alert: call `mcp__0deb4b0b-cc05-4ae4-8e5e-08d6c09985dd__slack_send_message` with:
      - `channel_id`: `C0AM6E2D4R2`
      - `message`: `⚠️ *Meeting digest blocked — Zoom error*\n\n[error message]. Check the Zoom for Claude connector in Claude settings.`
    - Then stop.
-3. Identify the **most recent** meeting by `schedule_start_time`. If there are multiple on the same day, pick the one with the latest start time.
-4. **Idempotency check** — before fetching the transcript:
-   - First, run `git -C /Users/priscila/Documents/Agents/personal-agent-main pull --ff-only` to ensure the working directory reflects any notes written by previous scheduled runs.
+
+3. **Filter to work meetings only.** Remove any entry where `topic` matches: Gym, Lunch Hour, Sacred Lunch, Home, Focus Time, club-, #club, Reflect & Plan, Recharge, or any entry with `attendee_size: 0` and no `meeting_uuid`. Also exclude `meeting_category: upcoming` (not yet ended).
+
+4. **Sort chronologically** (oldest first). This is the ordered list of meetings to process.
+
+5. **For each meeting in the list**, run the idempotency check before fetching assets:
+   - First (once, before the loop): run `git -C /Users/priscila/Documents/Agents/personal-agent-main pull --ff-only` to sync the working directory.
    - Derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` using the meeting's `topic` field (same format as Step 5).
-   - Check if a file with that name already exists in `Context/Meeting Notes/` using the Bash tool: `ls "/Users/priscila/Documents/Agents/personal-agent-main/Context/Meeting Notes/" | grep "[filename]"`.
-   - If it exists, stop immediately and output: *"Notes already exist for [meeting name] ([date]) — skipping to avoid duplicates."* Do not fetch the transcript.
-   - Also check git log: `git -C /Users/priscila/Documents/Agents/personal-agent-main log --oneline -10 | grep "[Meeting Name]"` as a secondary check in case the file was written but not visible.
-5. Using the `meeting_uuid` from the search result:
+   - Check if a file with that name already exists: `ls "/Users/priscila/Documents/Agents/personal-agent-main/Context/Meeting Notes/" | grep "[filename]"`
+   - If it exists, skip this meeting and move to the next. Output: *"Notes already exist for [meeting name] — skipping."*
+   - If it does NOT exist, proceed to fetch assets for this meeting.
+
+6. **For each undigested meeting**, using the `meeting_uuid`:
    - **a.** Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_meeting_assets` with `meetingId` set to the `meeting_uuid`. This returns the Zoom AI summary, my notes, recording status, and participant list.
-   - **b.** If a recording exists and `processing` is not `true`, call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_recording_resource` with `meetingId` set to the `meeting_uuid` and `types: "transcript,summary,nextStep"`. This returns the full transcript, Zoom's AI-generated summary, and auto-extracted next steps.
-6. If no transcript content is available (`recording` is `null`, `processing: true`, or `get_recording_resource` returns no transcripts), tell the user: *"Transcript not ready yet — Zoom usually takes 5–10 min after the meeting ends. Run `/meeting-digest` again shortly."* Then stop.
+   - **b.** If a recording exists and `processing` is not `true`, call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_recording_resource` with `meetingId` set to the `meeting_uuid` and `types: "transcript,summary,nextStep"`.
+   - **c.** If neither `my_notes` nor recording transcript is available, note: *"[Meeting name] — no transcript or notes available yet. Skipping."* and move to the next meeting.
+
+7. After processing all meetings, report how many were digested and how many skipped (with reasons).
 
 ---
 

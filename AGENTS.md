@@ -261,20 +261,33 @@ Examples:
 
 ## Git Workflow
 
-Always use feature branches — never commit directly to `main`.
+**Every file change must be committed and pushed to GitHub immediately.** GitHub must always reflect the exact current state of the local repo.
 
-Before making any file changes in a session:
-1. Create a branch: `git checkout -b <short-descriptive-name>` (e.g. `skill/meeting-digest-fix`, `wrap/cw17`, `chore/update-goals`)
-2. Make changes on that branch
-3. When the user asks to create a PR, commit, push the branch, and open a PR into `main` with `gh pr create`
+### Commit on every change
+After writing, editing, or deleting any file:
+1. Stage the affected file(s): `git add <file>`
+2. Commit with a descriptive message: `git commit -m "<type>: <what changed>"`
+3. Push immediately: `git push`
+
+Do this after **every** operation — meeting notes, skill edits, weekly wraps, AGENTS.md changes, task files. Do not batch changes and push later.
+
+### Content changes (meeting notes, wraps, tasks) — commit directly to `main`
+For operational content that changes frequently and doesn't need review:
+- Commit and push to `main` directly
+- No branch needed
+
+### Skill and config changes — use a feature branch
+For changes to `.claude/skills/`, `AGENTS.md`, `CLAUDE.md`, or system config:
+1. Create a branch: `git checkout -b <short-descriptive-name>`
+2. Make changes and commit on that branch
+3. Merge into `main` and push when complete
 
 Branch naming convention:
 - `skill/<name>` — changes to `.claude/skills/`
-- `wrap/<cw>` — weekly wrap sessions
-- `chore/<topic>` — config, AGENTS.md, or system updates
-- `task/<name>` — task file changes
+- `chore/<topic>` — AGENTS.md, config, or system updates
 
-If a session has already committed to `main` without a branch, note it but don't rewrite history — apply the workflow from the next session.
+### What is gitignored (not pushed)
+`Tasks/*.md` (except README, W01, workshop), `Notes/`, `Context/Memory/`, `Context/Document Hub/*.md`, `Context/Progress Updates/*.md`, `GOALS.md`, `BACKLOG.md`, `Bookmarks/` — these contain personal data and are local-only by design.
 
 ## Interaction Style
 

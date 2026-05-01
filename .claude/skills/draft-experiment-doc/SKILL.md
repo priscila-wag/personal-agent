@@ -7,7 +7,7 @@ description: "Draft an experiment doc following Canva's Confluence live doc stru
 
 Draft a structured experiment document following Canva's Confluence live doc format. The document has four areas — **Background**, **UX**, **Development**, and **Post experiment** — with different readiness requirements for each. The goal is to create a working doc that's immediately useful: filled sections are complete enough to share, empty sections are clearly marked so nothing gets forgotten.
 
-**Output:** Saved to `Context/Document Hub/[Experiment Name] Experiment Doc.md` and posted to #prw-personal-agents (`C0AM6E2D4R2`)
+**Output:** Saved to `Context/Document Hub/[Experiment Name] Experiment Doc.md` and shown in chat for review. Post to Slack only if Pri explicitly asks.
 
 ---
 
@@ -171,19 +171,21 @@ Save the completed draft as:
 
 ---
 
-## Step 6 — Post to #prw-personal-agents
+## Step 6 — Show in chat for review
 
-Call `slack_send_message` with channel `C0AM6E2D4R2`:
+Display the full doc in chat, then show a compact summary:
 
 ```
-*🧪 Experiment doc drafted — [Experiment Name]*
+🧪 **Experiment doc saved — [Experiment Name]**
 Saved to: Context/Document Hub/[filename]
 Jira ticket: [key or TBD]
 
-*Sections filled:* [list sections with real content]
-*Needs input before sharing:* [list sections marked [To complete] that are required]
-*Fill later:* QA (before launch), Experiment results (post-experiment)
+**Sections filled:** [list sections with real content]
+**Needs input before sharing:** [list [To complete] sections that are required]
+**Fill later:** QA (before launch), Experiment results (post-experiment)
 ```
+
+Do NOT call `slack_send_message` unless Pri explicitly asks to post to Slack.
 
 ---
 

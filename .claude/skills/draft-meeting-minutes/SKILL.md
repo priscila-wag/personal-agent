@@ -1,13 +1,11 @@
 ---
 name: draft-meeting-minutes
-description: "Draft structured meeting minutes from Zoom transcript, calendar event, or verbal description. Posts to #prw-personal-agents and saves to Context/Meeting Notes/."
+description: "Draft structured meeting minutes from Zoom transcript, calendar event, or verbal description. Saves to Context/Meeting Notes/ and shows in chat for review."
 ---
 
 # Draft Meeting Minutes
 
-Produce clean, structured meeting minutes from whatever source is available — Zoom transcript, calendar context, or a description of what happened. Save locally and post to #prw-personal-agents for review.
-
-**Channel ID:** `C0AM6E2D4R2`
+Produce clean, structured meeting minutes from whatever source is available — Zoom transcript, calendar context, or a description of what happened. Save locally and display in chat for review. Only post to Slack if Pri explicitly asks.
 
 ---
 
@@ -92,22 +90,23 @@ created_date: [YYYY-MM-DD]
 
 ---
 
-### Step 4 — Post to #prw-personal-agents
+### Step 4 — Show in chat for review
 
-Call `slack_send_message` with channel `C0AM6E2D4R2`:
+Display the full minutes in chat. Then show a compact summary:
 
 ```
-*📋 Meeting minutes drafted — [Meeting Name] ([date])*
-Saved to: Context/Meeting Notes/[filename]
+📋 **Minutes saved** — Context/Meeting Notes/[filename]
 
-*Decisions:* [count or "none"]
-*Action items:* [count] — [list owners]
-*Open questions:* [count]
+**Decisions:** [count or "none"]
+**Action items:** [count] — [owners listed]
+**Open questions:** [count]
 
-[If action items exist, list them as bullets for quick scanning]
+[Action items as bullets if any]
 
-Review and confirm, or reply with edits.
+Say "post to Slack" or name a channel to share.
 ```
+
+Do NOT call `slack_send_message` unless Pri explicitly asks to post to Slack.
 
 ---
 

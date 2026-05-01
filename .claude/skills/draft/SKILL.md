@@ -1,13 +1,11 @@
 ---
 name: draft
-description: "Universal drafting router — detects what type of draft is needed, uses the correct template, and posts output to #prw-personal-agents. Handles goal updates, PRDs, meeting minutes, emails, Slack messages, and strategy docs."
+description: "Universal drafting router — detects what type of draft is needed, uses the correct template, and shows output in chat for review. Handles goal updates, PRDs, meeting minutes, emails, Slack messages, and strategy docs."
 ---
 
 # Draft
 
-Detect the type of content needed, apply the right template, draft it in Pri's voice, and post to #prw-personal-agents. One entry point for all drafting.
-
-**Channel ID:** `C0AM6E2D4R2`
+Detect the type of content needed, apply the right template, draft it in Pri's voice, and show the result in chat. Only post to Slack if Pri explicitly asks.
 
 ---
 
@@ -59,14 +57,14 @@ Pass the full original request as context when executing the sub-skill.
 - Close with a clear ask or next step
 - Sign off: Pri (not "Best regards, Priscila Rachelle Wagner")
 
-**Post to #prw-personal-agents:**
+**Show in chat:**
 ```
-*✉️ Email draft — to [recipient] re: [subject]*
+✉️ **Email draft — to [recipient] re: [subject]**
+Subject: [suggested subject]
 
-[Full email text in a code block]
-
-Subject line: [suggested subject]
+[Full email text]
 ```
+Say "post to Slack" or "send" to share it.
 
 ---
 
@@ -83,12 +81,13 @@ Subject line: [suggested subject]
 - Avoid excessive emoji — use 1 if it fits, not as decoration
 - Keep it to what fits on a phone screen
 
-**Post to #prw-personal-agents:**
+**Show in chat:**
 ```
-*💬 Slack draft — [channel or @person]*
+💬 **Slack draft — [channel or @person]**
 
 [Full message text]
 ```
+Say "send it" or "post to [channel]" to send.
 
 ---
 
@@ -132,15 +131,14 @@ Subject line: [suggested subject]
 
 **Save to:** `Context/Document Hub/[title].md`
 
-**Post to #prw-personal-agents:**
+**Show in chat:**
 ```
-*📄 Strategy doc draft — [title]*
+📄 **Strategy doc saved — [title]**
 Saved to: Context/Document Hub/[filename]
 
 [TL;DR text]
-
-Review, fill open questions, and share when ready.
 ```
+Say "post to Slack" or name a channel to share.
 
 ---
 
@@ -158,4 +156,4 @@ Read `Context/Memory/pri-brain.md` before drafting. Apply these always:
 
 ## Output rule
 
-All draft types post to `#prw-personal-agents` (C0AM6E2D4R2). Never output only to the console when running automated — always post to Slack.
+All draft types show output in chat. Never auto-post to Slack — only post if Pri explicitly asks (e.g. "post this to #channel" or "send it").

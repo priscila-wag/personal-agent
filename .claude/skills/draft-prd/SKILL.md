@@ -8,7 +8,7 @@ description: "Draft a PRD using Canva's AI PRD template. Pulls context from Jira
 Draft a product requirements document following Canva's AI PRD template. Populate every required section from available context — leave optional sections clearly marked as [To complete].
 
 **Template source:** `Context/Memory/Reference/templates/prd-template.md`
-**Output:** Saved to `Context/Document Hub/[Initiative Name] PRD.md` + posted to #prw-personal-agents
+**Output:** Saved to `Context/Document Hub/[Initiative Name] PRD.md` + shown in chat for review. Post to Slack only if Pri explicitly asks.
 **Channel ID:** `C0AM6E2D4R2`
 
 ---
@@ -205,20 +205,20 @@ Save the full draft as:
 
 ---
 
-### Step 5 — Post to #prw-personal-agents
+### Step 5 — Show in chat for review
 
-Call `slack_send_message` with channel `C0AM6E2D4R2`:
+Display the full PRD in chat, then show a compact summary:
 
 ```
-*📄 PRD draft ready — [Initiative Name]*
+📄 **PRD saved — [Initiative Name]**
 Saved to: Context/Document Hub/[filename]
 Jira epic: [key or TBD]
 
-*Sections completed:* [list required sections that have real content]
-*Needs your input:* [list sections marked [To complete] or [Data needed]]
-
-Review the file and fill in the gaps before sharing.
+**Sections completed:** [list required sections with real content]
+**Needs your input:** [list [To complete] or [Data needed] sections]
 ```
+
+Do NOT call `slack_send_message` unless Pri explicitly asks to post to Slack.
 
 ---
 

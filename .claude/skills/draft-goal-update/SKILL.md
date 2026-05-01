@@ -125,25 +125,22 @@ Rules for the GA sentence:
 
 ---
 
-### Step 5 — Post draft to #prw-personal-agents
+### Step 5 — Show draft in chat for review
 
-Call `slack_send_message` with channel `C0AM6E2D4R2`:
+Display both outputs in chat:
 
 ```
-*📋 Goal update draft — [[UVSG-XXX]](https://canva.atlassian.net/browse/UVSG-XXX)*
+📋 **Goal update draft — [UVSG-XXX]**
 [Andi sign-off status: ✅ Signed off — "[quote]" OR ⚠️ Discussed — "[quote]" OR ❌ Not found — confirm before posting]
 
-*🎯 GA slide sentence*
+**🎯 GA slide sentence**
 [One snappy sentence for the Goal Alignment deck]
 
-*📝 Jira comment*
-Run `/jira comment UVSG-XXX` and paste:
-```
+**📝 Jira comment (paste when ready):**
 [Full Jira comment text]
 ```
-```
 
-No confirmation needed — both outputs are ready to use directly.
+Do NOT call `slack_send_message` unless Pri explicitly asks. Do NOT write to Jira until Pri confirms.
 
 ---
 

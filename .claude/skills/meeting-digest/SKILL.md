@@ -196,27 +196,23 @@ Replace `[Meeting Name]` and `[YYYY-MM-DD]` with the actual meeting title and da
 
 ---
 
-### Step 11 — Post summary to Slack
+### Step 11 — Show summary in chat
 
-After GitHub push (or failure), post a compact summary to `#prw-personal-agents` (`C0AM6E2D4R2`).
-
-Call `slack_send_message` with:
-- `channel_id`: `C0AM6E2D4R2`
-- `message`:
+After GitHub push (or failure), display a compact summary in chat:
 
 ```
-*📝 Meeting digest complete — [Meeting Name] ([YYYY-MM-DD])*
+📝 **Meeting digest complete — [Meeting Name] ([YYYY-MM-DD])**
 
-*Decisions:* [count] | *Action items:* [count] | *Jira tickets:* [count created] / [count linked]
+**Decisions:** [count] | **Action items:** [count]
 
-[List action items as bullets: • [task] → [owner] [[KEY-XXX]](https://canva.atlassian.net/browse/KEY-XXX)]
+[Action items as bullets: • [task] → [owner] [KEY-XXX]]
 
-_Notes saved to `Context/Meeting Notes/[filename].md`_
+Notes saved to `Context/Meeting Notes/[filename].md`
 ```
 
-If there are no action items, post a 1-liner: `*📝 [Meeting Name] digested — no action items.*`
+If there are no action items: `📝 [Meeting Name] digested — no action items.`
 
-If the Slack post fails, log and continue — do not block.
+Do NOT call `slack_send_message` unless Pri explicitly asks to post to Slack.
 
 ---
 

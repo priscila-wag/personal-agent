@@ -1,17 +1,47 @@
-# Personal data (keep private)
-Tasks/*.md
-!Tasks/README.md
-!Tasks/Week-2026-W01.md
-!Tasks/workshop-exercises.md
-Notes/*.md
-Context/Memory/*.md
-Context/Document Hub/*.md
-Context/Progress Updates/*.md
-Bookmarks/*.md
+# ── Personal data (never pushed to GitHub) ──────────────────────────────────
+
+# Goals, backlog, personal planning
 GOALS.md
 BACKLOG.md
+Weekly Kanban.md
 
-# IDE & Editor configs
+# Tasks (all weekly plans and personal task files)
+Tasks/*.md
+!Tasks/README.md
+
+# Notes
+Notes/*.md
+
+# Meeting notes — all personal conversations
+Context/Meeting Notes/*.md
+
+# Memory — all personal context and reference files
+Context/Memory/*.md
+Context/Memory/Reference/*.md
+
+# 1:1 docs
+Context/121s/*.md
+
+# Document hub, progress updates, bookmarks (all file types)
+Context/Document Hub/
+Context/Progress Updates/
+Bookmarks/
+
+# Any stray personal docs at project root
+*.docx
+*.pdf
+*.html
+!.claude/**/*.html
+
+# Idea graph and any generated HTML
+Context/idea-graph.html
+Context/*.html
+
+# Any stray personal files at root
+Jenna.md
+*.personal.md
+
+# ── IDE & Editor configs ─────────────────────────────────────────────────────
 .vscode/
 .idea/
 .obsidian/
@@ -20,11 +50,11 @@ BACKLOG.md
 *~
 .DS_Store
 
-# Tool-specific
+# ── Tool-specific ─────────────────────────────────────────────────────────────
 .specstory/
 .factory/
 .fuse_hidden*
 
-# Logs
+# ── Logs ─────────────────────────────────────────────────────────────────────
 *.log
 logs/

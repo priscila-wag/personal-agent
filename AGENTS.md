@@ -261,20 +261,27 @@ Examples:
 
 ## Git Workflow
 
-**Every file change must be committed and pushed to GitHub immediately.** GitHub must always reflect the exact current state of the local repo.
+**GitHub is for code only — never personal data.** The repo exists so this project can be shared publicly. Personal content (meeting notes, tasks, goals, memory, 1:1 docs, Kanban, idea graph) stays local only and is never committed or pushed.
 
-### Commit on every change
-After writing, editing, or deleting any file:
-1. Stage the affected file(s): `git add <file>`
-2. Commit with a descriptive message: `git commit -m "<type>: <what changed>"`
-3. Push immediately: `git push`
+### What gets pushed to GitHub ✅
+- `.claude/skills/` — skill definitions and slash commands
+- `AGENTS.md`, `CLAUDE.md` — assistant instructions
+- `README.md`, `LICENSE`, `.gitignore`, `.gitattributes`
+- `.gitkeep` placeholder files
 
-Do this after **every** operation — meeting notes, skill edits, weekly wraps, AGENTS.md changes, task files. Do not batch changes and push later.
+### What NEVER gets pushed ❌
+Everything else. This includes — but is not limited to:
+- `Context/Meeting Notes/` — meeting conversations and decisions
+- `Context/Memory/` — personal profile, learnings, reference files
+- `Context/121s/` — 1:1 relationship docs
+- `Context/Document Hub/` — PRDs, strategy docs
+- `Context/Progress Updates/` — weekly wraps
+- `Tasks/` — all task and planning files
+- `Notes/` — daily notes
+- `GOALS.md`, `BACKLOG.md`, `Weekly Kanban.md`
+- `Context/idea-graph.html` and any generated files
 
-### Content changes (meeting notes, wraps, tasks) — commit directly to `main`
-For operational content that changes frequently and doesn't need review:
-- Commit and push to `main` directly
-- No branch needed
+When in doubt: if a file contains anything about Pri's work, conversations, colleagues, or ideas — do not push it.
 
 ### Skill and config changes — use a feature branch
 For changes to `.claude/skills/`, `AGENTS.md`, `CLAUDE.md`, or system config:
@@ -286,8 +293,8 @@ Branch naming convention:
 - `skill/<name>` — changes to `.claude/skills/`
 - `chore/<topic>` — AGENTS.md, config, or system updates
 
-### What is gitignored (not pushed)
-`Tasks/*.md` (except README, W01, workshop), `Notes/`, `Context/Memory/`, `Context/Document Hub/*.md`, `Context/Progress Updates/*.md`, `GOALS.md`, `BACKLOG.md`, `Bookmarks/` — these contain personal data and are local-only by design.
+### Never push personal content
+Do not add git commands to skills that write personal files (meeting notes, tasks, memory, weekly wraps). Skills save files locally — that is enough. GitHub is not a backup system for personal data.
 
 ## Interaction Style
 

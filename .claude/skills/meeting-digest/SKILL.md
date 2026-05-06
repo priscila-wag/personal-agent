@@ -175,30 +175,15 @@ After saving:
 
 ---
 
-### Step 10 — Push to GitHub
+### Step 10 — SKIP
 
-After all notes and Jira updates are complete, commit and push the meeting notes file to the remote repo so it's available to other agents and automations.
-
-Run these commands from the repo root (`/Users/priscila/Documents/Agents/personal-agent-main`):
-
-```bash
-cd /Users/priscila/Documents/Agents/personal-agent-main
-git add "Context/Meeting Notes/"
-git commit -m "meeting digest: [Meeting Name] ([YYYY-MM-DD])"
-git push
-```
-
-Replace `[Meeting Name]` and `[YYYY-MM-DD]` with the actual meeting title and date.
-
-**If the push succeeds:** confirm quietly — *"Pushed to GitHub."*
-
-**If the push fails** (no remote, auth error, network issue): warn without blocking — *"Note: couldn't push to GitHub ([error]). Notes saved locally — push manually when ready."* Do not retry or hang.
+Meeting notes contain personal data and are never pushed to GitHub. Skip this step entirely and proceed to Step 11.
 
 ---
 
 ### Step 11 — Show summary in chat
 
-After GitHub push (or failure), display a compact summary in chat:
+After saving notes locally, display a compact summary in chat:
 
 ```
 📝 **Meeting digest complete — [Meeting Name] ([YYYY-MM-DD])**

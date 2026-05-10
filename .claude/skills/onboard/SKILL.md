@@ -103,15 +103,36 @@ Wait for the user's response, then go to Step 4.
 
 On confirmation, write the final draft to `GOALS.md`.
 
-### Step 6: Close
+### Step 6: Set up agent-config
+
+After writing GOALS.md, check whether `Context/agent-config.md` already exists.
+
+- **If it exists:** read it, show the current values, and ask: *"Your agent-config looks like this — anything to update?"* Apply any changes they mention.
+- **If it doesn't exist:** run the setup interview below, then write the file.
+
+**Agent-config setup interview** — ask all questions in a single message:
+
+> **One more thing — a few settings so all skills work out of the box:**
+>
+> 1. What's your Slack user ID? *(Find it in Slack → Profile → ⋯ → Copy member ID — starts with U)*
+> 2. What channel should I post briefings and drafts to? *(Paste the channel ID — the string starting with C)*
+> 3. What's your timezone? *(e.g. Australia/Sydney, Europe/London, America/New_York)*
+> 4. What's the full path to this workspace on your machine? *(e.g. /Users/yourname/Documents/Agents/personal-agent-main)*
+> 5. For PRDs and experiment docs — what name should appear as the default driver?
+> 6. Who is your default approver, and do you have their Slack ID and Jira email? *(Optional — skip if not applicable)*
+
+Wait for their response, then write `Context/agent-config.md` using the template structure from the existing file (or create it fresh if absent). Populate only the fields they provided — leave others with a `[To fill in]` placeholder.
+
+### Step 7: Close
 
 Tell the user what was written and suggest next steps — keep it brief:
 
-> "Done. `GOALS.md` is up to date with your goals and profile.
+> "Done. `GOALS.md` and `Context/agent-config.md` are set up.
 >
 > Next steps:
 > - `/today` — build your first daily plan
-> - Drop items into `BACKLOG.md` and run `/backlog` to turn them into goal-aligned tasks"
+> - Drop items into `BACKLOG.md` and run `/backlog` to turn them into goal-aligned tasks
+> - Create `Context/G&I Goals [cycle].md` when you're ready to track achievements — the `/achievements` skill will read from it"
 
 ## Output Format
 

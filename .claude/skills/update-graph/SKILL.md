@@ -1,11 +1,11 @@
 ---
 name: update-graph
-description: "Build or refresh Pri's interactive idea graph — connects her ideas from meeting notes to other people's Slack discussions and active Jira projects. Saves a self-contained HTML file. Run weekly or on demand."
+description: "Build or refresh the user's interactive idea graph — connects their ideas from meeting notes to other people's Slack discussions and active Jira projects. Saves a self-contained HTML file. Run weekly or on demand."
 ---
 
 # Update Idea Graph
 
-Regenerate `Context/idea-graph.html` — a fully self-contained interactive graph connecting Pri's ideas, other people's related Slack discussions, and active Jira projects.
+Regenerate `Context/idea-graph.html` — a fully self-contained interactive graph connecting the user's ideas, other people's related Slack discussions, and active Jira projects.
 
 **Design principle:** Only draw edges when the connection is OBVIOUS and SPECIFIC. A shared vague theme (both mention "AI") is NOT an edge. A shared specific concept ("half-sheet", "logged-out HA", "UVSG-615") IS an edge. When in doubt, leave the edge out. A sparse, accurate graph is better than a dense, noisy one.
 
@@ -24,9 +24,9 @@ Read all of these:
 - `Context/Memory/pri-brain.md` — how Pri thinks, her active mental models
 - `Context/Memory/Reference/jira-epic-map.md` — active epic/goal keys
 
-From these, extract a **keyword list**: 15–25 specific terms that represent Pri's active ideas right now. These must be specific (product names, feature names, Jira keys, initiative names) — not generic words like "help", "AI", "users".
+From these, extract a **keyword list**: 15–25 specific terms that represent the user's active ideas right now. These must be specific (product names, feature names, Jira keys, initiative names) — not generic words like "help", "AI", "users".
 
-Examples of good keywords: "half-sheet", "logged-out HA", "UVSG-615", "no-reply email", "mobile activation", "split panel", "content pipeline", "Contentful MCP", "LLM readability".
+Good keywords are drawn directly from the user's goals, milestones, and meeting notes — not invented here.
 
 This keyword list drives all Slack searches in Step 3.
 
@@ -37,9 +37,9 @@ This keyword list drives all Slack searches in Step 3.
 **Source A: Meeting notes (last 30 days)**
 Read all files in `Context/Meeting Notes/` modified in the last 30 days.
 For each file, extract:
-- Ideas, positions, or proposals Pri expressed
-- Decisions she made or drove
-- Concepts she's actively exploring
+- Ideas, positions, or proposals the user expressed
+- Decisions they made or drove
+- Concepts they're actively exploring
 
 For each idea node:
 ```json
@@ -198,7 +198,7 @@ Write the complete file to `Context/idea-graph.html` using the template below. R
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pri's Idea Graph</title>
+<title>Idea Graph</title>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -257,7 +257,7 @@ Write the complete file to `Context/idea-graph.html` using the template below. R
 <div id="app">
   <div id="sidebar">
     <div id="sidebar-header">
-      <h1>Pri's Idea Graph</h1>
+      <h1>Idea Graph</h1>
       <div class="meta" id="meta-text">Loading...</div>
     </div>
     <div id="search-box"><input type="text" placeholder="Search ideas..." id="search-input" /></div>

@@ -1,26 +1,21 @@
 ---
 name: draft-goal-update
-description: "Draft a monthly progress update for a UVSG goal ticket. Gathers context from Jira, linked HELP tickets, and Slack. Checks for Andi Schuster sign-off. Posts draft to #prw-personal-agents for review before any Jira write."
+description: "Draft a monthly progress update for a UVSG goal ticket. Gathers context from Jira, linked HELP tickets, and Slack. Checks for the default approver's sign-off. Posts draft to the user's personal channel for review before any Jira write."
 ---
 
 # Draft Goal Update
 
-Draft the monthly progress comment for a UVSG goal ticket, following the standard template. Always post to #prw-personal-agents for review — never write to Jira until Pri confirms.
+Draft the monthly progress comment for a UVSG goal ticket, following the standard template. Always show in chat for review — never write to Jira until the user confirms.
 
 ---
 
-## Known goal → ticket map
+## Configuration
 
-| Goal | Ticket |
-|------|--------|
-| Increase logged in AI Help Center sessions by 5% to provide tailored help guidance | UVSG-614 |
-| Launch Integrated AI Help Centre & Assistant | UVSG-615 |
+Read at the start:
+- `Context/agent-config.md` — for the user's Slack ID, personal channel ID, and default approver details
+- The G&I Goals file referenced in agent-config — for the current goal → ticket map
 
-Update this table when new goals are created.
-
-**Pri's Slack user ID:** `U0701AR9B35`
-**Andi Schuster (sign-off):** Slack `U06RUJU3URE`, Jira `andi.schuster@canva.com`
-**#prw-personal-agents channel ID:** `C0AM6E2D4R2`
+The goal → ticket map lives in `Context/G&I Goals H1 2026.md` (or whichever file is current). Do not hardcode goal keys here.
 
 ---
 
@@ -71,16 +66,19 @@ slack_search_public_and_private: [goal name keywords] in:uvsg-hcf OR in:hcf-team
 ```
 Extract: decisions made, scope changes, blockers raised.
 
-**B. Andi Schuster sign-off check**
+**B. Approver sign-off check**
+Use the `default_approver_slack_id` from `Context/agent-config.md`:
 ```
-slack_search_public_and_private: from:U06RUJU3URE [goal keywords] after:[30-days-ago]
+slack_search_public_and_private: from:[approver_slack_id] [goal keywords] after:[30-days-ago]
 ```
-Also search DMs between Pri (U0701AR9B35) and Andi (U06RUJU3URE).
+Also search DMs between the user (`slack_user_id`) and the approver (`default_approver_slack_id`).
 
 Classify the Andi sign-off as one of:
 - ✅ **Signed off** — explicit LGTM, approval, or agreement on scope/decision. Quote the message.
 - ⚠️ **Discussed** — relevant conversation found but no explicit sign-off. Quote the closest message.
 - ❌ **Not found** — no relevant recent messages.
+
+Use `default_approver_name` from `Context/agent-config.md` when referencing the approver in the draft.
 
 **C. Meeting notes**
 Scan `Context/Meeting Notes/` for files from the past 30 days containing the goal name or ticket key. Extract any decisions or milestones mentioned.
@@ -109,7 +107,7 @@ Risks & Blockers
 - Direct, no effort framing — leads with result
 - Specific over vague — name things
 - Short — no sentence should be padded
-- Cite Andi by name when referencing signed-off decisions: *"Agreed with Andi to..."*
+- Cite the approver by name (from `default_approver_name` in agent-config) when referencing signed-off decisions: *"Agreed with [approver] to..."*
 
 **Also draft a GA slide sentence** — one sentence for the Goal Alignment deck (the stakeholder-facing update, not the Jira comment). This is separate from the full update.
 
@@ -140,7 +138,7 @@ Display both outputs in chat:
 [Full Jira comment text]
 ```
 
-Do NOT call `slack_send_message` unless Pri explicitly asks. Do NOT write to Jira until Pri confirms.
+Do NOT call `slack_send_message` unless the user explicitly asks. Do NOT write to Jira until the user confirms.
 
 ---
 

@@ -1,11 +1,21 @@
 ---
 name: meeting-digest
-description: "Fetch the most recent Zoom meeting, extract decisions and action items, deduplicate against existing Jira issues, write a structured note to Context/Meeting Notes/, and create or update Jira tickets after Pri reviews them."
+description: "Fetch the most recent Zoom meeting, extract decisions and action items, deduplicate against existing Jira issues, write a structured note to Context/Meeting Notes/, and create or update Jira tickets after the user reviews them."
 ---
 
 # Meeting Digest
 
-Automatically fetch the latest Zoom meeting, produce a structured digest, save it locally, check each action item against existing Jira issues to avoid duplicates, and create or update tickets only after Pri reviews the recommendations.
+Automatically fetch the latest Zoom meeting, produce a structured digest, save it locally, check each action item against existing Jira issues to avoid duplicates, and create or update tickets only after the user reviews the recommendations.
+
+## Configuration
+
+Read `Context/agent-config.md` at the start. Use:
+- `timezone` — for all date calculations
+- `base_directory` — for file path construction and idempotency check
+- `personal_channel_id` — for Slack error alerts
+- `calendar_exclusions` — list of meeting title patterns to skip
+
+Read the G&I Goals file (path in agent-config) for the epic matching table used in Step 4.
 
 ---
 
@@ -19,25 +29,25 @@ Run all steps in sequence. Do not ask for confirmation between steps unless expl
 
 **This step processes ALL undigested work meetings from today — not just the most recent one.**
 
-1. Compute "today" as the current date in `Australia/Sydney` (AEST = UTC+10, AEDT = UTC+11). Set:
+1. Compute "today" as the current date in the timezone from `Context/agent-config.md` (e.g. `Australia/Sydney` = AEST UTC+10 / AEDT UTC+11). Set:
    - `from` = start of today AEST converted to UTC (e.g. if today is 2026-04-21 AEST, use `2026-04-20T14:00:00Z`)
    - `to` = now in UTC (always use the current moment — never a fixed earlier time)
    Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_meetings` with this range and `page_size: 20`.
 
 2. **Error handling** — if the call fails or returns an error:
    - Post a Slack alert: call `mcp__0deb4b0b-cc05-4ae4-8e5e-08d6c09985dd__slack_send_message` with:
-     - `channel_id`: `C0AM6E2D4R2`
+     - `channel_id`: use `personal_channel_id` from `Context/agent-config.md`
      - `message`: `⚠️ *Meeting digest blocked — Zoom error*\n\n[error message]. Check the Zoom for Claude connector in Claude settings.`
    - Then stop.
 
-3. **Filter to work meetings only.** Remove any entry where `topic` matches: Gym, Lunch Hour, Sacred Lunch, Home, Focus Time, club-, #club, Reflect & Plan, Recharge, or any entry with `attendee_size: 0` and no `meeting_uuid`. Also exclude `meeting_category: upcoming` (not yet ended).
+3. **Filter to work meetings only.** Remove any entry where `topic` matches a pattern in `calendar_exclusions` from `Context/agent-config.md`, or any entry with `attendee_size: 0` and no `meeting_uuid`. Also exclude `meeting_category: upcoming` (not yet ended).
 
 4. **Sort chronologically** (oldest first). This is the ordered list of meetings to process.
 
 5. **For each meeting in the list**, run the idempotency check before fetching assets:
-   - First (once, before the loop): run `git -C /Users/priscila/Documents/Agents/personal-agent-main pull --ff-only` to sync the working directory.
+   - First (once, before the loop): run `git -C [base_directory] pull --ff-only` (use `base_directory` from `Context/agent-config.md`) to sync the working directory.
    - Derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` using the meeting's `topic` field (same format as Step 5).
-   - Check if a file with that name already exists: `ls "/Users/priscila/Documents/Agents/personal-agent-main/Context/Meeting Notes/" | grep "[filename]"`
+   - Check if a file with that name already exists: `ls "[base_directory]/Context/Meeting Notes/" | grep "[filename]"`
    - If it exists, skip this meeting and move to the next. Output: *"Notes already exist for [meeting name] — skipping."*
    - If it does NOT exist, proceed to fetch assets for this meeting.
 
@@ -85,23 +95,11 @@ Unresolved questions, blockers raised, or topics parked for a future meeting. Th
 
 ### Step 4 — Match action items to Jira epics
 
-For each action item, determine the best Jira epic by reading the meeting context against `GOALS.md`. Use this matching logic:
+For each action item, determine the best Jira epic by reading the meeting context against `GOALS.md` and the milestone hierarchy in the G&I Goals file (path in `Context/agent-config.md`).
 
-| If the action item is about... | Suggest this epic |
-|---|---|
-| AI Help Center, HA, logged-in sessions, UVSG-614 | UVSG-614 |
-| Integrated AI HC + Assistant, split panel, AI chat, UVSG-615 | UVSG-615 |
-| Logged-out HA, login incentive, TIMDL | HELP-4319 |
-| No-reply email help access | HELP-4340 |
-| Canva AI Help + ChatGPT MCP | HELP-3785 |
-| Mobile help experience, mobile UX, mobile audit | HELP-4139 |
-| LLM readability, article structure for AI | HELP-3222 |
-| CMS integration, in-context tutorials, Design School | HELP-3820 |
-| Content pipeline, Contentful, publishing automation | Use HELP-3090 |
-| Affinity, China, global/local HC | Use HELP-3090 |
-| Anything else, unclear, or cross-cutting | Use HELP-3090 (default fallback) |
+Use the goal routing rules from that file to match action items to UVSG goals or HELP epics. When nothing clearly matches, use the miscellaneous epic (typically the catch-all epic listed in the G&I Goals file) as the default fallback.
 
-State your epic suggestion in the review output. Pri will confirm or override before tickets are created.
+State your epic suggestion in the review output. The user will confirm or override before tickets are created.
 
 ---
 

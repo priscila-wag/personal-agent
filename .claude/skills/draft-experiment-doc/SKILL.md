@@ -1,7 +1,12 @@
 ---
 name: draft-experiment-doc
-description: "Draft an experiment doc following Canva's Confluence live doc structure. Confirms which sections are ready for input, pulls context from Jira/PRDs/Slack, then produces a structured doc with filled sections and clear [To complete] markers. Use this skill whenever Pri mentions drafting, writing, or creating an experiment doc, experiment brief, or experiment page — even if she just says 'start an experiment doc for X' or 'set up the experiment doc'."
+description: "Draft an experiment doc following Canva's Confluence live doc structure. Confirms which sections are ready for input, pulls context from Jira/PRDs/Slack, then produces a structured doc with filled sections and clear [To complete] markers. Use this skill whenever someone mentions drafting, writing, or creating an experiment doc, experiment brief, or experiment page."
 ---
+
+## Configuration
+
+Read `Context/agent-config.md` at the start. Use:
+- `default_driver` — for the Driver field in the doc header (override if specified)
 
 # Draft Experiment Doc
 
@@ -92,7 +97,7 @@ status: Planning
 
 | | |
 |---|---|
-| Driver | [Pri Wagner — unless specified otherwise] |
+| Driver | [default_driver from agent-config — override if specified] |
 | Jira ticket | [key or TBD] |
 | Created | [today's date] |
 | Status | Planning |
@@ -185,7 +190,7 @@ Jira ticket: [key or TBD]
 **Fill later:** QA (before launch), Experiment results (post-experiment)
 ```
 
-Do NOT call `slack_send_message` unless Pri explicitly asks to post to Slack.
+Do NOT call `slack_send_message` unless the user explicitly asks to post to Slack.
 
 ---
 

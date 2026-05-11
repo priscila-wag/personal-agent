@@ -1,186 +1,223 @@
 # personal-agent
 
-Become agent-native by building your own personal agent harness. No code, no database — just a folder of markdown files and an AI that understands your context, goals, and priorities. Your agent reads your files, learns your preferences, remembers what you've learned, and helps you stay focused on what actually matters. It gets smarter every week.
+A personal AI agent that keeps your career on track, writes your product and experiment docs, and makes meetings and tasks effortless. No code, no database — just a folder of markdown files, a set of skills, and an AI that knows your context.
 
-Works with **Claude Code Desktop**, **Claude Code CLI**, **Claude Co-Work**, **Cursor**, or any agent that reads local files. The harness is the folder structure and skills — the tool is just the delivery mechanism.
+Your agent reads your goals, remembers your preferences, and learns from every week. It gets more useful the longer you use it.
+
+Works with **Claude Code Desktop**, **Claude Code CLI**, **Claude Co-Work**, **Cursor**, or any AI tool that reads local files.
+
+---
 
 ## What It Does
 
-- **Goal-driven task management** — every task ties back to your stated goals
-- **Weekly + daily planning** — `/plan-week` on Monday sets the full week, `/today` each morning builds from it
-- **Backlog triage** — brain-dump into `BACKLOG.md`, then run `/backlog` to turn raw notes into structured tasks
-- **Weekly review** — `/weekly-wrap` reviews progress, produces a shareable update, and compounds learnings into memory
-- **1:1 prep** — `/121 [person]` pulls context from notes, tasks, and tools to generate talking points, and maintains ongoing relationship docs at `Context/121s/`
-- **Meeting prep built into /today** — 1:1s get full talking points (Discuss, Ask, Strategic, Close the loop); normal meetings get a 1-bullet action/perspective
-- **Content drafting** — `/draft [topic]` writes in your voice, not generic AI
-- **Document steelmanning** — `/steelman-advice [doc]` runs 3-5 parallel critique perspectives to surface blind spots and concrete improvements
-- **Meeting digests** — `/meeting-digest` fetches your latest Zoom transcript, extracts decisions and action items, deduplicates against Jira, and creates tickets after you review. Runs automatically every hour 9am–5pm via launchd.
-- **Persistent memory** — your agent remembers preferences, decisions, and lessons across sessions
+### 🎯 Keep your career on track
+- Map every task and milestone to your G&I goals
+- Log weekly achievements automatically from Jira and Slack — G&I review becomes copy-paste
+- Track growth behaviours (AI judgment, strategic leverage, visible prioritisation, signal-first comms) with evidence as you go
+- Run a bias audit on any decision against your motivational profile
+- Get a structured morning briefing every day — calendar, Jira, and overnight Slack signals in one place
+
+### 📄 Generate product and experiment docs
+- Draft PRDs, experiment docs, and goal update comments from Jira context, Slack discussions, and your existing docs
+- Multi-perspective steelmanning of any document — 3–5 critique lenses run in parallel to surface blind spots before you share
+- Draft emails, Slack messages, and strategy docs in your own voice
+
+### ⚡ Make meetings and tasks efficient
+- Auto-digest Zoom meetings: extract decisions and action items, deduplicate against Jira, save structured notes
+- Morning briefing posted automatically at 8:30am — focus items, overdue Jira, overnight signals
+- 1:1 prep with full talking points generated from notes, tasks, and ongoing relationship docs
+- Weekly and daily planning that reads from your goals, not a blank slate
+
+---
 
 ## Quick Start
 
-### 1. Download this folder
+### 1. Get the folder
 
-```
+```bash
 git clone https://github.com/priscila-wag/personal-agent.git
 ```
 
-Or download the zip from the green **<Code>** button above.
-
-Put it somewhere that makes sense for you (not just Downloads). It's a normal folder you open in your AI tool when you use it.
+Or download the zip from the green **Code** button above. Put it somewhere permanent — this is a living workspace, not a one-time download.
 
 ### 2. Open it in an AI tool
 
-You need two things: something to **edit and browse** your files, and something to **run the AI agent**. You can use one tool for both, or pair them.
+You need something to **run the AI** and something to **browse your files**. You can use one tool for both, or pair them.
 
 #### Claude Code Desktop (recommended)
 
-Full Claude Code experience in an app. Fully customizable, reads your files, runs skills.
-
 1. Download [Claude Code Desktop](https://claude.ai/download) (macOS / Windows)
-2. Open the app, click the **Code** tab at the top, select **Local**, then click **Select folder** and choose the `personal-agent` folder
-3. Start chatting — try: *"Look at the files in this workspace. What do you see?"*
-
-Skills (`/today`, `/weekly-wrap`, etc.) are auto-discovered from `.claude/skills/`.
-
-#### Claude Co-Work (lighter alternative)
-
-Claude Code in a business suit — handles most tasks, less customizable, but zero setup.
-
-1. Open [Claude Co-Work](https://claude.ai) and select this folder
-2. Start chatting — skills are auto-discovered
+2. Open the app → **Code** tab → **Local** → **Select folder** → choose `personal-agent`
+3. Start chatting. Skills are auto-discovered from `.claude/skills/`
 
 #### Claude Code CLI
 
-Same capabilities as Desktop, terminal-based.
+```bash
+npm install -g @anthropic-ai/claude-code
+cd personal-agent && claude
+```
 
-1. Install: `npm install -g @anthropic-ai/claude-code`
-2. `cd personal-agent && claude`
-3. Start chatting or run `/today`
+#### Claude Co-Work
+
+Open [Claude Co-Work](https://claude.ai) and select this folder. Skills are auto-discovered.
 
 #### Cursor
 
-AI-native code editor — good for power users who want to edit files and chat side-by-side.
-
-1. Download [Cursor](https://cursor.com)
-2. Open this folder as a project
-3. Use the AI chat panel (`Cmd+L`) — it picks up `CLAUDE.md` as context
-4. Pin `AGENTS.md` in chat for full agent instructions
+Open this folder as a project. Use the AI chat panel (`Cmd+L`) — it picks up `CLAUDE.md` as context automatically.
 
 #### Obsidian (companion, not AI)
 
-Obsidian is great for **browsing and editing** your markdown files — kanban boards, linked notes, graph view. It doesn't run AI itself, but pairs perfectly with any of the tools above.
+[Obsidian](https://obsidian.md) is great for browsing and editing your markdown files — kanban boards, linked notes, graph view. It doesn't run AI, but pairs well with any of the tools above.
 
-1. Download [Obsidian](https://obsidian.md)
-2. Open this folder as a vault
-3. Browse tasks, goals, and notes with a rich visual UI
-4. Run your AI tool (Claude Desktop, Cursor, CLI) alongside Obsidian
+---
 
-### 3. Fill in your goals
+### 3. Run `/onboard`
 
-This is the most important file. Everything the agent suggests is grounded in your goals. Three ways to get started:
+This is the fastest way to get set up. `/onboard` walks you through two things:
 
-- **Edit directly** — open `GOALS.md` and fill in the prompts (your role, vision, quarterly objectives, top 3 priorities)
-- **Ask in natural language** — e.g. *"Help me fill in my GOALS.md. Ask me the questions you need."*
-- **Use the `/onboard` command** — a skill included in this repo that walks you through a structured interview
+1. **Goals interview** — populates `GOALS.md` with your role, vision, quarterly priorities, and current projects
+2. **Agent config** — creates `Context/agent-config.md` with your Slack ID, timezone, personal channel, and default document settings
 
-### 4. Explore the example week
+Everything the agent does is grounded in these two files. Fill them in once; all skills read from them automatically.
 
-Check out `Tasks/Week-2026-W01.md` — it's a pre-filled example showing how the planning loop works. Monday and Tuesday are "lived" (items checked off, meeting notes, decisions), while Wednesday–Friday are still just planned. Run `/today` to see how the agent reads from this scratchpad and builds a daily briefing.
+---
 
-### 5. Start using it
+### 4. Start using it
 
 **Daily:**
-- `/today` — get your daily plan (reads from the weekly plan if it exists)
-- Drop tasks into `BACKLOG.md` throughout the day
-- `/backlog` — triage your backlog into structured task files
-- *"Remember that I prefer..."* — save preferences to memory
+- `/today` — daily plan from your weekly scratchpad, calendar, Jira, and overnight signals
+- `/morning-briefing` — posts a compact brief to your Slack channel at 8:30am (runs automatically)
+- Drop items into `BACKLOG.md` → `/backlog` to triage into structured tasks
 
 **Weekly:**
-- `/plan-week` — plan the full week on Monday morning
-- `/weekly-wrap` — review the week, produce a shareable update, compound learnings
+- `/plan-week` — full week plan on Monday: priorities, meeting triage, daily pre-plans
+- `/weekly-wrap` — Friday review: progress, shareable update, learnings compounded into memory
 
-**As needed:**
-- `/121 [person]` — prep for a 1:1 meeting (also runs automatically inside `/today`)
-- `/draft [topic]` — draft an email, Slack message, or document
-- `/steelman-advice [doc]` — multi-perspective critique of any document
-- `/slack-unactioned` — triage unread Slack into Tonight vs Tomorrow
-- `/meeting-digest` — fetch latest Zoom transcript → decisions, action items, Jira tickets
-- `/unblock [task]` — diagnose a stalled task
-- `/bias` — audit decisions against your motivational blind spots
-- `/achievements` — log and track accomplishments (feeds promo docs)
-- `/canva-lingo` — Canva-specific terminology and context reference
+**Career & G&I:**
+- `/achievements` — pull the week's progress from Jira and Slack, map to goals, log to your achievements file
+- `/bias [topic]` — audit a decision against your motivational profile blind spots
+- `/draft-goal-update [UVSG-XXX]` — draft the monthly goal comment from Jira + Slack context
+
+**Meetings & 1:1s:**
+- `/meeting-digest` — Zoom transcript → decisions, action items, structured notes (also runs hourly, 9am–5pm)
+- `/121 [person]` — talking points from notes, tasks, and your ongoing relationship doc (also runs inside `/today`)
+- `/draft-meeting-minutes` — structured minutes from transcript or description
+
+**Product & experiment docs:**
+- `/draft-prd [initiative]` — PRD from Jira epic, GOALS.md, and Slack context
+- `/draft-experiment-doc [name]` — experiment doc following Canva's Confluence structure
+- `/draft-goal-update` — monthly progress comment for a UVSG goal ticket
+- `/draft [topic]` — email, Slack message, or strategy doc in your voice
+- `/steelman-advice [doc]` — multi-perspective critique: blind spots, reframes, concrete improvements
+
+**On demand:**
+- `/slack-unactioned` — triage unread Slack into Tonight (urgent) vs Tomorrow (can wait)
+- `/unblock [task]` — diagnose a stalled task and find the smallest next action
+- `/canva-lingo` — look up Canva-specific terms, acronyms, and deprecated names
+- `/update-graph` — refresh the interactive idea graph connecting your ideas, Slack discussions, and Jira projects
+
+---
 
 ## Folder Structure
 
 ```
 personal-agent/
-├── GOALS.md               # Your goals, vision, and priorities (fill this in first)
-├── BACKLOG.md             # Raw capture inbox — dump ideas here
-├── AGENTS.md              # Agent instructions (how the AI behaves)
-├── CLAUDE.md              # Points to AGENTS.md (auto-loaded by Claude)
-├── Weekly Kanban.md       # Sprint board — visual kanban with [[wiki-links]]
+├── GOALS.md                      # Your goals, vision, and quarterly priorities
+├── BACKLOG.md                    # Raw capture inbox — dump ideas here
+├── AGENTS.md                     # Agent instructions (how the AI behaves)
+├── CLAUDE.md                     # Points to AGENTS.md (auto-loaded by Claude)
+├── Weekly Kanban.md              # Sprint board — visual kanban with [[wiki-links]]
 │
-├── Tasks/                 # Structured task files with metadata
-│   ├── Backlog/           # Initiative/track files — strategic context
-│   └── Done/              # Completed tasks (archived here)
+├── Tasks/                        # Active task files
+│   ├── Backlog/                  # Initiative/track files — strategic context
+│   └── Done/                     # Completed tasks (archived here)
 │
-├── Context/               # Persistent personal context
-│   ├── Memory/            # Facts, preferences, and compounded learnings
-│   │   └── Reference/     # Writing-style guides, frameworks, company context
-│   ├── 121s/              # Ongoing 1:1 relationship docs (maintained by /121)
-│   ├── Document Hub/      # Strategy docs, PRDs, reference material
-│   ├── Meeting Notes/     # Meeting summaries
-│   └── Progress Updates/  # Weekly wraps and reviews
+├── Context/                      # Persistent personal context
+│   ├── agent-config.md           # Your settings: Slack ID, timezone, defaults (created by /onboard)
+│   ├── G&I Goals H1 2026.md      # Current review cycle: goals, milestones, growth behaviours
+│   ├── Memory/                   # Preferences, decisions, and compounded learnings
+│   │   ├── pri-brain.md          # Deep map of how you think, communicate, and decide
+│   │   ├── bias.md               # Motivational profile — drives /bias and communication rules
+│   │   ├── learnings.md          # Distilled weekly insights — compounds over time
+│   │   └── Reference/            # Writing-style guides, strategic frameworks, company context
+│   ├── 121s/                     # Ongoing 1:1 relationship docs (maintained by /121)
+│   ├── Document Hub/             # PRDs, strategy docs, experiment docs, decision records
+│   ├── Meeting Notes/            # Meeting digests and summaries
+│   └── Progress Updates/         # Weekly wraps, goal reviews, achievements log
 │
-├── Notes/                 # Daily notes and thinking
-├── Bookmarks/             # Reading list and saved links
+├── Notes/                        # Daily notes and thinking
+├── Bookmarks/                    # Reading list and saved links
 │
-└── .claude/skills/        # Slash commands (auto-discovered)
-    ├── today/             # /today — daily planning
-    ├── plan-week/         # /plan-week — weekly planning
-    ├── backlog/           # /backlog — triage inbox
-    ├── weekly-wrap/       # /weekly-wrap — weekly review + learnings
-    ├── 121/               # /121 — 1:1 meeting prep
-    ├── draft/             # /draft — content drafting
-    ├── unblock/           # /unblock — task diagnosis
-    ├── bias/              # /bias — motivational bias audit
-    ├── steelman-advice/   # /steelman-advice — multi-perspective document critique
-    ├── slack-unactioned/  # /slack-unactioned — triage unread messages
-    ├── meeting-digest/    # /meeting-digest — Zoom → decisions + Jira tickets (also runs hourly via launchd)
-    ├── achievements/      # /achievements — log accomplishments
-    ├── canva-lingo/       # /canva-lingo — company terminology reference
-    ├── update-graph/      # /update-graph — update the idea graph with new Slack findings
-    └── onboard/           # /onboard — first-time setup
+└── .claude/skills/               # Slash commands (auto-discovered)
+    ├── onboard/                  # /onboard — first-time setup + agent-config
+    ├── today/                    # /today — daily planning
+    ├── plan-week/                # /plan-week — weekly planning
+    ├── backlog/                  # /backlog — triage inbox
+    ├── weekly-wrap/              # /weekly-wrap — weekly review + learnings
+    ├── morning-briefing/         # /morning-briefing — daily Slack brief (auto at 8:30am)
+    ├── achievements/             # /achievements — G&I log from Jira + Slack
+    ├── 121/                      # /121 — 1:1 meeting prep
+    ├── meeting-digest/           # /meeting-digest — Zoom → notes + action items
+    ├── draft-meeting-minutes/    # /draft-meeting-minutes — structured minutes
+    ├── draft/                    # /draft — universal drafting router
+    ├── draft-prd/                # /draft-prd — PRD from Jira + Slack context
+    ├── draft-experiment-doc/     # /draft-experiment-doc — Canva experiment doc structure
+    ├── draft-goal-update/        # /draft-goal-update — monthly goal comment
+    ├── steelman-advice/          # /steelman-advice — multi-perspective document critique
+    ├── slack-unactioned/         # /slack-unactioned — triage unread messages
+    ├── unblock/                  # /unblock — diagnose stalled tasks
+    ├── bias/                     # /bias — motivational bias audit
+    ├── update-graph/             # /update-graph — interactive idea graph
+    └── canva-lingo/              # /canva-lingo — company terminology reference
 ```
+
+---
 
 ## How It Works
 
-Three layers:
+Three layers work together:
 
-1. **Context** (`GOALS.md`, `Context/Memory/`) — the agent reads these to understand who you are and what you're working toward. The richer your context, the better the output. Without this, every session is a capable stranger. With it, every session picks up where the last one left off.
+**1. Config** (`GOALS.md`, `Context/agent-config.md`, `Context/G&I Goals *.md`)
+The agent reads these to understand who you are, what you're working toward, and how to find your tools. Without this, every session is a capable stranger. With it, every session picks up where the last one left off.
 
-2. **Tasks** (`Tasks/`, `BACKLOG.md`, `Weekly Kanban.md`) — structured markdown with YAML frontmatter. Each task has a priority, status, description, and goal reference. The Kanban board gives you a visual sprint view.
+**2. Tasks** (`Tasks/`, `BACKLOG.md`, `Weekly Kanban.md`)
+Structured markdown with YAML frontmatter — priority, status, goal reference. The Kanban board gives a visual sprint view. The planning loop (below) keeps these files current automatically.
 
-3. **Skills** (`.claude/skills/`) — reusable workflows triggered by slash commands. They combine file reading, reasoning, and tool use into repeatable processes that reference your goals and adapt to your priorities.
+**3. Skills** (`.claude/skills/`)
+Reusable workflows triggered by slash commands. They combine file reading, reasoning, and tool calls into repeatable processes that adapt to your goals and context.
 
 ### The Planning Loop
 
 ```
-Monday: /plan-week → creates Tasks/Week-YYYY-WNN.md with all 5 days
-Daily:  /today → reads from weekly plan, preps every meeting (1:1s + normal), updates the scratchpad
-Friday: /weekly-wrap → reviews the week, produces shareable update, compounds learnings
+Monday:  /plan-week  → creates Tasks/Week-YYYY-WNN.md with all 5 days pre-planned
+Daily:   /today      → reads weekly plan, preps every meeting, updates the scratchpad
+Friday:  /weekly-wrap → reviews progress, produces a shareable update, compounds learnings
 ```
 
 ### The Compounding Loop
 
 ```
-/weekly-wrap distills insights → Context/Memory/learnings.md
-    → future sessions reference past learnings
-    → better advice → more learnings → repeat
+/weekly-wrap → distills insights into Context/Memory/learnings.md
+                   ↓
+         future sessions reference past learnings
+                   ↓
+         better advice → more learnings → repeat
 ```
 
-Your agent after 4 weeks is meaningfully better than on day one.
+Your agent after 4 weeks is meaningfully better than on day one. After 8–10 weeks of `/achievements`, your G&I self-review is copy-paste.
+
+---
+
+## Using This With Your Team
+
+All skills are generic — no personal data is hardcoded. Each user sets up two files once:
+
+- **`Context/agent-config.md`** — Slack ID, timezone, channel, default document names
+- **`Context/G&I Goals [cycle].md`** — current review cycle goals, milestone hierarchy, growth behaviours
+
+To give a teammate access: share the `.claude/skills/` folder. They run `/onboard` and fill in their own config. All skills work from their context, not yours.
+
+---
 
 ## How This Relates to Co-Work
 
@@ -189,46 +226,52 @@ If you're using Claude Co-Work, this workspace is complementary — not a replac
 | Co-Work alone | Co-Work + this workspace |
 |---|---|
 | Each session starts blank | Sessions inherit your goals, memory, and learnings |
-| Skills are generic recipes | Skills reference YOUR goals and context |
+| Skills are generic recipes | Skills reference your goals, config, and G&I cycle |
 | No memory across sessions | `Context/Memory/` persists everything |
 | You repeat yourself every time | `GOALS.md` is read automatically |
 
-Co-Work provides the hands (connectors, sub-agents, Chrome, local files). This workspace provides the brain (goals, memory, learnings, skills that know you). You don't need to choose — they stack.
+Co-Work provides the hands (connectors, sub-agents, Chrome, local files). This workspace provides the brain (goals, memory, learnings, skills that know you). They stack.
+
+---
 
 ## Automated Agents
 
-Some skills run on a schedule without you triggering them — fully autonomous loops that keep the system fresh.
+Some skills run on a schedule without being triggered manually.
+
+### Morning Briefing (daily, 8:30am)
+
+`/morning-briefing` posts your daily brief to Slack every morning via macOS launchd. It pulls calendar, Jira, and overnight Slack signals, picks 3 focus items, and posts a compact message to your personal channel.
 
 ### Meeting Digest (hourly, 9am–5pm)
 
-`/meeting-digest` runs automatically every hour via macOS launchd. It checks for new Zoom meetings, skips ones already processed (idempotent), and when it finds something new: extracts decisions and action items, deduplicates against Jira, saves notes to `Context/Meeting Notes/`, and pushes to GitHub.
+`/meeting-digest` runs every hour and checks for new Zoom meetings. When it finds one not yet processed: extracts decisions and action items, saves structured notes to `Context/Meeting Notes/`. Fully idempotent — safe to run multiple times.
 
 **Setup files:**
-- `~/.claude/scripts/meeting-digest.sh` — shell wrapper with dynamic Claude binary detection
-- `~/Library/LaunchAgents/com.pri.meeting-digest.plist` — schedule (9, 10, 11 … 17:00)
+- `~/.claude/scripts/meeting-digest.sh` — shell wrapper
+- `~/Library/LaunchAgents/com.pri.meeting-digest.plist` — launchd schedule
 - `~/.claude/logs/meeting-digest.log` — run log
 
-**To load/unload:**
 ```bash
+# Load
 launchctl load ~/Library/LaunchAgents/com.pri.meeting-digest.plist
-launchctl unload ~/Library/LaunchAgents/com.pri.meeting-digest.plist
-```
 
-**To trigger manually for testing:**
-```bash
+# Trigger manually
 launchctl start com.pri.meeting-digest
+
+# Unload
+launchctl unload ~/Library/LaunchAgents/com.pri.meeting-digest.plist
 ```
 
 ---
 
-## Create Your Own Skills
+## Add Your Own Skills
 
-Add a file at `.claude/skills/<name>/SKILL.md`:
+Create `.claude/skills/<name>/SKILL.md`:
 
 ```markdown
 ---
 name: my-skill
-description: "What this skill does"
+description: "What this skill does and when to use it"
 ---
 
 # My Skill
@@ -238,9 +281,11 @@ description: "What this skill does"
 [Steps for the agent to follow]
 ```
 
-Run it with `/my-skill`.
+Run it with `/my-skill`. Skills can read any file in the workspace, call connected tools (Jira, Slack, Zoom, Calendar), and write output back to your files.
 
-**Ideas:** `/status-update` · `/brainstorm [topic]` · `/retro` · `/goal-alignment`
+**Ideas:** `/status-update` · `/retro` · `/goal-alignment` · `/brainstorm [topic]` · `/promo-doc`
+
+---
 
 ## License
 

@@ -1,6 +1,6 @@
 ---
 name: draft-prd
-description: "Draft a PRD using Canva's AI PRD template. Pulls context from Jira epic, GOALS.md, Slack, and existing docs. Saves to Context/Document Hub/ and posts to #prw-personal-agents."
+description: "Draft a PRD using Canva's AI PRD template. Pulls context from Jira epic, GOALS.md, Slack, and existing docs. Saves to Context/Document Hub/ and shows in chat for review."
 ---
 
 # Draft PRD
@@ -8,8 +8,14 @@ description: "Draft a PRD using Canva's AI PRD template. Pulls context from Jira
 Draft a product requirements document following Canva's AI PRD template. Populate every required section from available context — leave optional sections clearly marked as [To complete].
 
 **Template source:** `Context/Memory/Reference/templates/prd-template.md`
-**Output:** Saved to `Context/Document Hub/[Initiative Name] PRD.md` + shown in chat for review. Post to Slack only if Pri explicitly asks.
-**Channel ID:** `C0AM6E2D4R2`
+**Output:** Saved to `Context/Document Hub/[Initiative Name] PRD.md` + shown in chat for review. Post to Slack only if the user explicitly asks.
+
+## Configuration
+
+Read `Context/agent-config.md` at the start. Use:
+- `default_driver` — for the Driver field in the PRD header (override if a different driver is specified)
+- `default_approver_name` — for the Approver field (override if specified)
+- `personal_channel_id` — only if the user explicitly asks to post to Slack
 
 ---
 
@@ -64,8 +70,8 @@ To follow this project: #[channel if known]
 
 | | |
 |---|---|
-| Driver | [Pri Wagner — unless specified otherwise] |
-| Approver | [Andi Schuster — unless specified otherwise] |
+| Driver | [default_driver from agent-config — override if specified] |
+| Approver | [default_approver_name from agent-config — override if specified] |
 | Contributors | [from Jira assignees / Slack context] |
 | Informed | [from Slack / meeting context] |
 | Jira epic | [key or TBD] |
@@ -218,7 +224,7 @@ Jira epic: [key or TBD]
 **Needs your input:** [list [To complete] or [Data needed] sections]
 ```
 
-Do NOT call `slack_send_message` unless Pri explicitly asks to post to Slack.
+Do NOT call `slack_send_message` unless the user explicitly asks to post to Slack.
 
 ---
 

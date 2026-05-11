@@ -1,7 +1,15 @@
 ---
 name: morning-briefing
-description: "Automated daily brief — pulls calendar, Jira, and Slack overnight signals, picks 3 focus items, and posts a compact briefing to #prw-personal-agents. Runs unattended at 8:30am Mon–Fri via launchd."
+description: "Automated daily brief — pulls calendar, Jira, and Slack overnight signals, picks 3 focus items, and posts a compact briefing to the user's personal Slack channel. Runs unattended at 8:30am Mon–Fri via launchd."
 ---
+
+## Configuration
+
+Read `Context/agent-config.md` at the start. Use:
+- `timezone` — for date calculations throughout
+- `personal_channel_id` — for posting the brief (Step 4)
+- `slack_user_id` — for draft trigger detection (Step 1)
+- `base_directory` — for resolving skill file paths
 
 # Morning Briefing
 
@@ -19,7 +27,7 @@ Run all steps in sequence. If a tool is unavailable or returns an error, skip th
 
 ### Step 1 — Get today's context
 
-Compute today's date and yesterday's date. Sydney timezone (Australia/Sydney).
+Compute today's date and yesterday's date using the timezone from `Context/agent-config.md`.
 
 **Calendar** — call `list_events` for today (midnight → 11:59pm Sydney time):
 - Extract: meeting title, time, duration, attendees
@@ -43,7 +51,7 @@ slack_search_public_and_private: in:C0A0JA960SV after:yesterday
 ```
 Extract: any questions directed at Pri, any decisions made without her, any blockers raised. Ignore automated bot messages and FYI broadcasts unless they name Pri.
 
-**Draft request detection** — while scanning Slack results, flag any message that mentions Pri (`<@U0701AR9B35>`) and matches any of these patterns:
+**Draft request detection** — while scanning Slack results, flag any message that mentions the user (use `slack_user_id` from `Context/agent-config.md`) and matches any of these patterns:
 
 | Pattern | Draft type | Example trigger |
 |---------|-----------|-----------------|
@@ -69,8 +77,8 @@ If `DRAFT_TRIGGERS` is non-empty, run this step before posting the morning brief
 
 For each triggered item, call the `/draft` router:
 
-1. Read `/Users/priscila/Documents/Agents/personal-agent-main/.claude/skills/draft/SKILL.md` and execute it, passing the full context of what was requested (goal update, meeting notes, PRD request — whatever was detected).
-2. The `/draft` skill routes to the correct sub-skill and posts its output to `#prw-personal-agents` (C0AM6E2D4R2) — do not suppress it.
+1. Read `[base_directory]/.claude/skills/draft/SKILL.md` (use `base_directory` from `Context/agent-config.md`) and execute it, passing the full context of what was requested (goal update, meeting notes, PRD request — whatever was detected).
+2. The `/draft` skill routes to the correct sub-skill and posts its output to the personal channel (use `personal_channel_id` from `Context/agent-config.md`) — do not suppress it.
 3. After the draft is posted, add a line to the morning brief under `*⚠️ Heads Up*`:
    > *🖊️ Draft ready: [type] — [subject]. Check #prw-personal-agents.*
 
@@ -134,10 +142,10 @@ Rules:
 ### Step 4 — Post to Slack
 
 Call `slack_send_message` with:
-- `channel_id`: `C0AM6E2D4R2` (#prw-personal-agents)
+- `channel_id`: use `personal_channel_id` from `Context/agent-config.md`
 - `message`: the composed brief from Step 3
 
-If the post succeeds: done. Output nothing to stdout except a single confirmation line for the log: `morning-briefing posted to #prw-personal-agents`.
+If the post succeeds: done. Output nothing to stdout except a single confirmation line for the log: `morning-briefing posted`.
 
 If the post fails: log the error and exit. Do not retry.
 

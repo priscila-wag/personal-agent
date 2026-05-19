@@ -1,16 +1,16 @@
 ---
 name: meeting-digest
-description: "Fetch the most recent Zoom meeting, extract decisions and action items, deduplicate against existing Jira issues, write a structured note to Context/Meeting Notes/, and create or update Jira tickets after the user reviews them."
+description: "Digest all work meetings from a given day — uses Google Calendar as source of truth and Zoom AI Companion notes as content. Extracts decisions, action items, and blockers, writes structured notes to Context/Meeting Notes/."
 ---
 
 # Meeting Digest
 
-Automatically fetch the latest Zoom meeting, produce a structured digest, save it locally, check each action item against existing Jira issues to avoid duplicates, and create or update tickets only after the user reviews the recommendations.
+Fetch all work meetings for a target day, read the Zoom AI Companion notes for each, produce a structured digest, and save it locally. The target day defaults to today; pass "yesterday" to process the prior day.
 
 ## Configuration
 
 Read `Context/agent-config.md` at the start. Use:
-- `timezone` — for all date calculations
+- `timezone` — for all date calculations (e.g. `Australia/Sydney`)
 - `base_directory` — for file path construction and idempotency check
 - `personal_channel_id` — for Slack error alerts
 - `calendar_exclusions` — list of meeting title patterns to skip
@@ -25,55 +25,93 @@ Run all steps in sequence. Do not ask for confirmation between steps unless expl
 
 ---
 
-### Step 1 — Fetch all undigested meetings from today
+### Step 1 — Fetch all undigested meetings for the target day
 
-**This step processes ALL undigested work meetings from today — not just the most recent one.**
+**This step uses Google Calendar as the source of truth and Zoom AI Companion notes as content. Do NOT use `search_meetings` or `get_meeting_assets` — those tools cannot reliably identify specific past occurrences of recurring meetings.**
 
-1. Compute "today" as the current date in the timezone from `Context/agent-config.md` (e.g. `Australia/Sydney` = AEST UTC+10 / AEDT UTC+11). Set:
-   - `from` = start of today AEST converted to UTC (e.g. if today is 2026-04-21 AEST, use `2026-04-20T14:00:00Z`)
-   - `to` = now in UTC (always use the current moment — never a fixed earlier time)
-   Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_meetings` with this range and `page_size: 20`.
+#### Phase A — Calendar: get the meeting list
 
-2. **Error handling** — if the call fails or returns an error:
+1. Compute the target date in the user's timezone (from `Context/agent-config.md`). Default = today; if the user passed "yesterday", subtract one day.
+
+2. Call `mcp__4cf876bf-4b8b-4c42-896f-3db6ae3e2298__list_events` with:
+   - `startTime` = start of target date in local timezone (ISO 8601 with offset, e.g. `2026-05-18T00:00:00+10:00`)
+   - `endTime` = end of target date in local timezone (e.g. `2026-05-18T23:59:59+10:00`)
+   - `timeZone` = user's timezone (e.g. `Australia/Sydney`)
+   - `orderBy` = `startTime`
+
+3. **Filter to work meetings only.** Remove any event where:
+   - `summary` matches a pattern in `calendar_exclusions` from `Context/agent-config.md`
+   - `eventType` is `focusTime` or `workingLocation`
+   - `attendees` list is empty or contains only the user (solo blocks)
+   - Event has no attendees field at all and is clearly a personal block
+
+4. **Sort chronologically** (oldest first). This is the ordered list of meetings to process.
+
+#### Phase B — Zoom: fetch all AI Companion notes for the day
+
+1. Convert the target date to a UTC range:
+   - `from` = start of target date in local time → UTC (e.g. AEST 00:00 = previous day 14:00 UTC)
+   - `to` = end of target date in local time → UTC (e.g. AEST 23:59 = same day 13:59 UTC)
+
+2. Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__search_zoom` with:
+   ```
+   search_entities: [{ "entity_type": "zoom_doc", "filters": { "doc_view": "notes", "from": "<UTC start>", "to": "<UTC end>" } }]
+   page_size: 50
+   ```
+   This returns all Zoom AI Companion note documents created during that day. Each result includes `title`, `file_id`, `create_time`, and `modify_time`.
+
+3. **Error handling** — if the call fails or returns an error:
    - Post a Slack alert: call `mcp__0deb4b0b-cc05-4ae4-8e5e-08d6c09985dd__slack_send_message` with:
      - `channel_id`: use `personal_channel_id` from `Context/agent-config.md`
      - `message`: `⚠️ *Meeting digest blocked — Zoom error*\n\n[error message]. Check the Zoom for Claude connector in Claude settings.`
    - Then stop.
 
-3. **Filter to work meetings only.** Remove any entry where `topic` matches a pattern in `calendar_exclusions` from `Context/agent-config.md`, or any entry with `attendee_size: 0` and no `meeting_uuid`. Also exclude `meeting_category: upcoming` (not yet ended).
+#### Phase C — Match calendar events to Zoom notes
 
-4. **Sort chronologically** (oldest first). This is the ordered list of meetings to process.
+For each calendar event from Phase A, find the matching Zoom doc from Phase B:
 
-5. **For each meeting in the list**, run the idempotency check before fetching assets:
-   - First (once, before the loop): run `git -C [base_directory] pull --ff-only` (use `base_directory` from `Context/agent-config.md`) to sync the working directory.
-   - Derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` using the meeting's `topic` field (same format as Step 5).
-   - Check if a file with that name already exists: `ls "[base_directory]/Context/Meeting Notes/" | grep "[filename]"`
-   - If it exists, skip this meeting and move to the next. Output: *"Notes already exist for [meeting name] — skipping."*
-   - If it does NOT exist, proceed to fetch assets for this meeting.
+1. **Title match**: The zoom_doc `title` typically starts with the calendar event `summary` followed by the date/time (e.g. `"HCF Planning 2026-05-18 10:17(GMT+10:00)"`). Match on the leading words of the title.
+2. **Time match (fallback)**: If the title match is ambiguous, check that `zoom_doc.create_time` falls within the calendar event's `start` → `end` window (±30 min tolerance).
+3. **No match**: If no zoom_doc corresponds to a calendar event, mark it as `"no Zoom notes available"` and skip it — do not attempt to fetch from any other source.
 
-6. **For each undigested meeting**, using the `meeting_uuid`:
-   - **a.** Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_meeting_assets` with `meetingId` set to the `meeting_uuid`. This returns the Zoom AI summary, my notes, recording status, and participant list.
-   - **b.** If a recording exists and `processing` is not `true`, call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_recording_resource` with `meetingId` set to the `meeting_uuid` and `types: "transcript,summary,nextStep"`.
-   - **c.** If neither `my_notes` nor recording transcript is available, note: *"[Meeting name] — no transcript or notes available yet. Skipping."* and move to the next meeting.
+#### Phase D — Idempotency check
 
-7. After processing all meetings, report how many were digested and how many skipped (with reasons).
+Before reading content for any meeting:
+
+1. First (once, before the loop): run `git -C [base_directory] pull --ff-only` to sync the working directory.
+2. Derive the expected notes filename: `YYYY-MM-DD - [Meeting Name].md` using the calendar event `summary` (same format as Step 5).
+3. Check if a file with that name already exists: `ls "[base_directory]/Context/Meeting Notes/" | grep "[filename]"`
+4. If it exists → skip this meeting. Output: *"Notes already exist for [meeting name] — skipping."*
+5. If it does NOT exist → proceed to Phase E.
+
+#### Phase E — Read Zoom note content
+
+For each undigested meeting that has a matched zoom_doc:
+
+Call `mcp__9edf655b-9ecb-4911-aa24-26584c7014e0__get_file_content` with the `file_id` from the matched zoom_doc. This returns the full AI Companion note in Markdown.
+
+If the content is empty or only whitespace → mark as `"no content available"` and skip.
+
+#### Phase F — Report
+
+After processing all meetings, report:
+- How many were digested
+- How many were skipped (with reason: already exists / no Zoom notes / no content)
 
 ---
 
 ### Step 2 — Read context
 
-Before processing the transcript, read:
+Before processing any note content, read:
 - `GOALS.md` — to understand active projects and know which Jira epics exist
 - `Context/Memory/pri-brain.md` — to understand how Pri thinks, her vocabulary, and what she considers a decision vs. a discussion
 - `Context/Memory/Reference/jira-epic-map.md` — epic matching reference (if it exists)
 
 ---
 
-### Step 3 — Analyse the transcript
+### Step 3 — Analyse the note content
 
-**Additional signal:** If `get_recording_resource` returned `summaries` or `next_steps` arrays (Zoom's AI-generated content), use them as supplementary cross-checks — but do not copy them verbatim. Your job is to extract meaning through Pri's lens, not relay Zoom's output.
-
-Extract four things from the transcript:
+For each meeting with content, extract four things:
 
 **A. Summary**
 2–3 sentences. Signal-first: what was the meeting about and what was the key outcome or shift. Not a list of topics covered — a single coherent outcome statement. Use Pri's voice: direct, no effort framing, leads with result.
@@ -83,7 +121,7 @@ Explicit commitments that changed direction, locked something in, or closed an o
 
 **C. Action items**
 Concrete next steps with a named owner. Apply this logic per item:
-- If the transcript names a specific person as the driver with high confidence → assign to them
+- If the note names a specific person as the driver with high confidence → assign to them
 - If ownership is ambiguous or shared → assign to Pri (priscila.wagner@canva.com)
 - For each item, suggest the best Jira epic match using the logic in Step 4
 - Note the suggested due date if mentioned in the meeting, otherwise leave blank
@@ -108,13 +146,13 @@ State your epic suggestion in the review output. The user will confirm or overri
 Save the digest to `Context/Meeting Notes/` using this filename format:
 `YYYY-MM-DD - [Meeting Name].md`
 
-Use the meeting name from the Zoom note title. Strip any Zoom-generated suffixes (e.g. "Zoom Meeting" or long IDs).
+Use the calendar event `summary` as the meeting name (not the Zoom doc title, which may include timestamps or "Google Calendar Meeting (not synced)").
 
 **File format:**
 
 ```markdown
 # [Meeting Name]
-*[YYYY-MM-DD] | [Duration if available] | [Attendees if available]*
+*[YYYY-MM-DD] | [Duration if available] | [Attendees from calendar if available]*
 
 ## Summary
 [2–3 sentence signal-first summary. What happened and what changed.]
@@ -203,6 +241,8 @@ Do NOT call `slack_send_message` unless Pri explicitly asks to post to Slack.
 
 - **No decisions found**: Write "No decisions made — discussion/update meeting." Do not invent decisions.
 - **No action items found**: Write "No action items." Do not create Jira tickets.
-- **Transcript is a standup or <5 min**: Still run the digest, but keep the summary to 1 sentence and skip Jira ticket creation unless action items are explicitly present.
-- **Multiple meetings today**: List the top 3 by recency and ask: *"I found [N] meetings today — I fetched the most recent ([name]). Is that the right one, or should I use a different one?"*
+- **Meeting is a standup or <5 min**: Still run the digest, but keep the summary to 1 sentence and skip Jira ticket creation unless action items are explicitly present.
+- **Zoom doc title is "Google Calendar Meeting (not synced)"**: The meeting was held via a room system. Match it to the calendar event by `create_time` falling within the event's time window. Use the calendar event `summary` as the meeting name in the notes file.
+- **Multiple zoom_docs match the same calendar event**: Use the one whose `create_time` is closest to the event's start time.
+- **No zoom_doc found for a calendar event**: Note it as skipped — "no Zoom AI notes for [meeting name]". Do not attempt `search_meetings` or `get_meeting_assets` as a fallback.
 - **Person not found in Jira**: Flag the item: "Couldn't find [name] in Jira — assigning to Pri by default. Confirm?"
